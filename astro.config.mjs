@@ -5,8 +5,8 @@ import { loadYaplGrammars } from "./src/utils/yapl-grammars.mjs";
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://yapl-lang.github.io',
-  base: '/yapl-all',
+  site: 'https://yapl-language.github.io',
+  base: '/documentation',
   integrations: [
     starlight({
       title: "YAPL Documentation",
@@ -21,7 +21,7 @@ export default defineConfig({
         {
           icon: "github",
           label: "GitHub",
-          href: "https://github.com/yapl-lang/yapl",
+          href: "https://github.com/yapl-language/yapl.ts",
         },
         {
           icon: "external",
