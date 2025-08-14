@@ -1,0 +1,13 @@
+:root {
+  /* Primary accent color */
+  --sl-color-accent: #db2777;
+  --sl-color-accent-high: #be185d; /* slightly deeper for emphasis */
+  --sl-color-accent-low: #ffe4f1;  /* soft tint for subtle backgrounds */
+}
+
+[data-theme='dark'] {
+  /* Keep the same primary in dark, adjust supporting shades for contrast */
+  --sl-color-accent: #db2777;
+  --sl-color-accent-high: #fecdd3; /* lighter highlight against dark bg */
+  --sl-color-accent-low: #3b0d1f;  /* deep tint for subtle surfaces */
+}

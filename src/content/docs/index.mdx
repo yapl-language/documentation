@@ -1,36 +1,75 @@
 ---
-title: Welcome to Starlight
-description: Get started building your docs site with Starlight.
+title: YAPL - Yet Another Prompt Language
+description: A powerful template language designed specifically for AI prompts
 template: splash
 hero:
-  tagline: Congrats on setting up a new Starlight project!
+  tagline: A tiny, pink-powered prompt language for AI agents
   image:
-    file: ../../assets/houston.webp
+    alt: YAPL logo
+    file: ../../assets/yapl-logo.svg
   actions:
-    - text: Example Guide
-      link: /guides/example/
+    - text: Get Started
+      link: /quick-start/
       icon: right-arrow
-    - text: Read the Starlight docs
-      link: https://starlight.astro.build
+      variant: primary
+    - text: View Examples
+      link: /examples/basic/
+      icon: open-book
+      variant: secondary
+    - text: Visit Website
+      link: https://yapl-language.github.io
       icon: external
       variant: minimal
 ---
 
 import { Card, CardGrid } from '@astrojs/starlight/components';
 
-## Next steps
+YAPL is a markdown-first, composable templating language for AI agents. Define **blocks**, reuse with **mixins**, and inject **variables** to create dynamic, maintainable prompts that scale.
+
+## Why YAPL?
 
 <CardGrid stagger>
-	<Card title="Update content" icon="pencil">
-		Edit `src/content/docs/index.mdx` to see this page change.
+	<Card title="Template Inheritance" icon="puzzle">
+		Build complex prompts by extending base templates, just like in web frameworks. Define common structures once and customize them for specific use cases.
 	</Card>
-	<Card title="Add new content" icon="add-document">
-		Add Markdown or MDX files to `src/content/docs` to create new pages.
+	<Card title="Mixins & Composition" icon="add-document">
+		Compose prompts from reusable components. Mix and match different behaviors, tones, and capabilities without duplication.
 	</Card>
-	<Card title="Configure your site" icon="setting">
-		Edit your `sidebar` and other config in `astro.config.mjs`.
+	<Card title="Dynamic Variables" icon="setting">
+		Use variables with default values to create flexible prompts that adapt to different contexts and requirements.
 	</Card>
-	<Card title="Read the docs" icon="open-book">
-		Learn more in [the Starlight Docs](https://starlight.astro.build/).
+	<Card title="Conditional Logic" icon="laptop">
+		Include or exclude content based on conditions, creating prompts that adapt to user types, difficulty levels, or specific scenarios.
 	</Card>
 </CardGrid>
+
+## Quick Example
+
+```yapl title="agent-template.md.yapl"
+{% extends "base/system.md" %}
+{% mixin "mixins/friendly.md" %}
+
+{% block persona %}
+{{ super() }}
+You are {{ agent_type | default("a helpful assistant") }} specializing in {{ domain }}.
+{% endblock %}
+
+{% block guidance %}
+{{ super() }}
+{% if user_level == "beginner" %}
+Use simple language and provide step-by-step explanations.
+{% else %}
+You can use technical terminology and advanced concepts.
+{% endif %}
+{% endblock %}
+```
+
+:::note[Syntax Highlighting]
+YAPL uses a Twig-like syntax with `{{ }}` for variables and `{% %}` for directives. The syntax highlighting above shows YAPL-specific tokens in the brand pink color scheme.
+:::
+
+This creates a flexible AI agent prompt that inherits from a base system template, adds friendly behavior through a mixin, and adapts its communication style based on the user's experience level.
+
+:::tip[Try it yourself!]
+Visit the [YAPL Playground](https://yapl-language.github.io#playground) to experiment with this example interactively.
+:::

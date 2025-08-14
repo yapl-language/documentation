@@ -1,0 +1,179 @@
+---
+title: Installation
+description: How to install and set up YAPL in your project
+---
+
+# Installation
+
+YAPL is available as a TypeScript/JavaScript library that can be used in both Node.js and browser environments.
+
+## Prerequisites
+
+- Node.js 18 or higher
+- npm, yarn, or pnpm
+
+## Installation
+
+Install YAPL using your preferred package manager:
+
+```bash
+# npm
+npm install yapl
+
+# yarn
+yarn add yapl
+
+# pnpm
+pnpm add yapl
+```
+
+## Basic Setup
+
+### Node.js Environment
+
+For Node.js applications with file system access:
+
+```typescript
+import { NodeYAPL } from 'yapl';
+
+const yapl = new NodeYAPL({
+  baseDir: './prompts', // Directory containing your .yapl files
+  cache: true,          // Enable file caching for better performance
+  strictPaths: true,    // Prevent path traversal outside baseDir
+  maxDepth: 20,         // Maximum template nesting depth
+});
+
+// Render a template file
+const result = await yapl.render('agent.md.yapl', {
+  name: 'Assistant',
+  domain: 'customer support'
+});
+
+console.log(result.content);
+```
+
+### Browser Environment
+
+For browser applications or when you don't need file system access:
+
+```typescript
+import { YAPL } from 'yapl';
+
+const yapl = new YAPL({
+  baseDir: '/virtual', // Virtual base directory
+});
+
+// Render template strings directly
+const templateSource = `
+Hello, {{ name | default("World") }}!
+{% if greeting %}{{ greeting }}{% endif %}
+`;
+
+const result = await yapl.renderString(templateSource, {
+  name: 'YAPL User',
+  greeting: 'Welcome to YAPL!'
+});
+
+console.log(result.content);
+```
+
+## Configuration Options
+
+### YAPLOptions
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `baseDir` | `string` | Required | Base directory for template files |
+| `cache` | `boolean` | `true` | Enable file caching (Node.js only) |
+| `strictPaths` | `boolean` | `true` | Prevent path traversal outside baseDir |
+| `maxDepth` | `number` | `20` | Maximum template nesting depth |
+| `whitespace` | `WhitespaceOptions` | See below | Whitespace control options |
+
+### WhitespaceOptions
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `trimBlocks` | `boolean` | `true` | Remove newlines after block tags |
+| `lstripBlocks` | `boolean` | `true` | Remove leading whitespace before block tags |
+| `dedentBlocks` | `boolean` | `true` | Remove common indentation from block content |
+
+## Directory Structure
+
+Organize your YAPL templates in a clear directory structure:
+
+```
+prompts/
+├── base/
+│   ├── system.md.yapl
+│   └── agent.md.yapl
+├── mixins/
+│   ├── friendly.md.yapl
+│   ├── professional.md.yapl
+│   └── safety.md.yapl
+├── agents/
+│   ├── customer-support.md.yapl
+│   ├── technical-writer.md.yapl
+│   └── code-reviewer.md.yapl
+└── tasks/
+    ├── summarize.md.yapl
+    ├── translate.md.yapl
+    └── analyze.md.yapl
+```
+
+## File Extensions
+
+While YAPL templates can have any extension, common conventions include:
+
+- `.yapl` - Pure YAPL templates
+- `.md.yapl` - Markdown-based prompts with YAPL templating
+- `.txt.yapl` - Plain text prompts with YAPL templating
+- `.json.yapl` - JSON-structured prompts with YAPL templating
+
+## Verification
+
+Test your installation with a simple example:
+
+```typescript
+import { NodeYAPL } from 'yapl';
+import { writeFileSync, mkdirSync } from 'fs';
+
+// Create a test directory and template
+mkdirSync('./test-prompts', { recursive: true });
+writeFileSync('./test-prompts/hello.md.yapl', `
+# Hello {{ name | default("World") }}
+
+{% if message %}
+{{ message }}
+{% else %}
+Welcome to YAPL!
+{% endif %}
+`);
+
+// Test the installation
+const yapl = new NodeYAPL({ baseDir: './test-prompts' });
+const result = await yapl.render('hello.md.yapl', {
+  name: 'Developer',
+  message: 'YAPL is working correctly!'
+});
+
+console.log(result.content);
+// Output:
+// # Hello Developer
+// 
+// YAPL is working correctly!
+```
+
+## VS Code Extension
+
+For the best development experience, install the official YAPL VS Code extension:
+
+[![Install VS Code Extension](https://img.shields.io/visual-studio-marketplace/v/yapl.yapl-vscode?style=for-the-badge&logo=visual-studio-code&logoColor=white&label=VS%20Code%20Extension&color=f472b6)](https://marketplace.visualstudio.com/items?itemName=yapl.yapl-vscode)
+
+The extension provides:
+- Syntax highlighting for `.yapl` files
+- Code snippets for common patterns
+- Future: IntelliSense and error diagnostics
+
+## Next Steps
+
+Now that you have YAPL installed, check out the [Quick Start](/quick-start/) guide to learn the basics, or dive into the [Core Features](/features/variables/) documentation to explore YAPL's capabilities.

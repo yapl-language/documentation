@@ -1,26 +1,76 @@
 // @ts-check
-import { defineConfig } from 'astro/config';
-import starlight from '@astrojs/starlight';
+import { defineConfig } from "astro/config";
+import starlight from "@astrojs/starlight";
+import { loadYaplGrammars } from "./src/utils/yapl-grammars.mjs";
 
 // https://astro.build/config
 export default defineConfig({
-	integrations: [
-		starlight({
-			title: 'My Docs',
-			social: [{ icon: 'github', label: 'GitHub', href: 'https://github.com/withastro/starlight' }],
-			sidebar: [
-				{
-					label: 'Guides',
-					items: [
-						// Each item here is one entry in the navigation menu.
-						{ label: 'Example Guide', slug: 'guides/example' },
-					],
-				},
-				{
-					label: 'Reference',
-					autogenerate: { directory: 'reference' },
-				},
-			],
-		}),
-	],
+  site: 'https://yapl-lang.github.io',
+  base: '/yapl-all',
+  integrations: [
+    starlight({
+      title: "YAPL Documentation",
+      description:
+        "Yet Another Prompt Language - A template language for AI prompts",
+      logo: {
+        src: "./src/assets/yapl-logo.svg",
+        replacesTitle: false,
+      },
+      favicon: "/favicon.svg",
+      social: [
+        {
+          icon: "github",
+          label: "GitHub",
+          href: "https://github.com/yapl-lang/yapl",
+        },
+        {
+          icon: "external",
+          label: "YAPL Website",
+          href: "https://yapl-language.github.io",
+        },
+      ],
+      customCss: ["./src/styles/custom.css"],
+      expressiveCode: {
+        // Keep custom YAPL language support but otherwise use Starlight defaults
+        shiki: { langs: loadYaplGrammars() },
+      },
+      sidebar: [
+        {
+          label: "Getting Started",
+          items: [
+            { label: "Introduction", slug: "introduction" },
+            { label: "Installation", slug: "installation" },
+            { label: "Quick Start", slug: "quick-start" },
+          ],
+        },
+        {
+          label: "Core Features",
+          items: [
+            { label: "Variables", slug: "features/variables" },
+            { label: "Template Inheritance", slug: "features/inheritance" },
+            { label: "Mixins", slug: "features/mixins" },
+            { label: "Conditionals", slug: "features/conditionals" },
+            { label: "Includes", slug: "features/includes" },
+            { label: "Whitespace Control", slug: "features/whitespace" },
+          ],
+        },
+        {
+          label: "Examples",
+          items: [
+            { label: "Basic Prompts", slug: "examples/basic" },
+            { label: "AI Agent Templates", slug: "examples/agents" },
+            { label: "Complex Workflows", slug: "examples/workflows" },
+          ],
+        },
+        {
+          label: "Reference",
+          items: [
+            { label: "Syntax Reference", slug: "reference/syntax" },
+            { label: "API Reference", slug: "reference/api" },
+            { label: "Configuration", slug: "reference/configuration" },
+          ],
+        },
+      ],
+    }),
+  ],
 });
