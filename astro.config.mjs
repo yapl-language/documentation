@@ -11,7 +11,7 @@ const __dirname = path.dirname(__filename);
 // https://astro.build/config
 export default defineConfig({
   site: 'https://yapl-language.github.io',
-  // base: '/documentation', // Commented out for local development
+  base: '/documentation',
   integrations: [
     starlight({
       title: "YAPL Documentation",
