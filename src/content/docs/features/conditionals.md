@@ -33,27 +33,63 @@ I'll assume you're familiar with the basics.
 {% endif %}
 ```
 
-### If-Elif-Else Chains
+### If-ElseIf-Else Chains
 
 ```yapl
 {% if user_level == "beginner" %}
 Let's start with the fundamentals.
-{% elif user_level == "intermediate" %}
+{% elseif user_level == "intermediate" %}
 I'll cover the key concepts and some advanced topics.
 {% else %}
 I'll focus on expert-level insights and edge cases.
 {% endif %}
 ```
 
-## Condition Types
-
-### Equality Comparisons
+You can chain multiple `elseif` conditions:
 
 ```yapl
+{% if score >= 90 %}
+Grade: A (Excellent!)
+{% elseif score >= 80 %}
+Grade: B (Good work!)
+{% elseif score >= 70 %}
+Grade: C (Satisfactory)
+{% elseif score >= 60 %}
+Grade: D (Needs improvement)
+{% else %}
+Grade: F (Please retry)
+{% endif %}
+```
+
+## Condition Types
+
+### Comparison Operators
+
+YAPL supports various comparison operators for numeric and string comparisons:
+
+```yapl
+{# Equality comparisons #}
 {% if status == "active" %}Active user{% endif %}
 {% if count == 0 %}No items{% endif %}
-{% if name == "admin" %}Administrator access{% endif %}
+{% if name != "guest" %}Welcome back!{% endif %}
+
+{# Numeric comparisons #}
+{% if age >= 18 %}You are an adult{% endif %}
+{% if temperature > 30 %}It's hot today{% endif %}
+{% if score <= 60 %}Needs improvement{% endif %}
+{% if items < 5 %}Low inventory{% endif %}
+
+{# String comparisons work too #}
+{% if version >= "2.0" %}New features available{% endif %}
 ```
+
+**Supported operators:**
+- `==` - equals
+- `!=` - not equals  
+- `>=` - greater than or equal
+- `<=` - less than or equal
+- `>` - greater than
+- `<` - less than
 
 ### Boolean Values
 
@@ -74,6 +110,36 @@ Hello, guest!
 
 {% if optional_message is defined %}
 {{ optional_message }}
+{% endif %}
+
+{# Check if variable is empty #}
+{% if items is not empty %}
+You have {{ items.length }} items.
+{% else %}
+Your list is empty.
+{% endif %}
+```
+
+### Logical Operators
+
+Combine multiple conditions using logical operators:
+
+```yapl
+{# AND operator #}
+{% if user.active and user.verified %}
+Welcome, verified user!
+{% endif %}
+
+{# OR operator #}
+{% if user.role == "admin" or user.role == "moderator" %}
+You have elevated privileges.
+{% endif %}
+
+{# Complex combinations #}
+{% if user.age >= 18 and user.country == "US" %}
+You can vote in US elections.
+{% elseif user.age >= 16 and user.country == "UK" %}
+You can vote in UK elections.
 {% endif %}
 ```
 
@@ -148,7 +214,7 @@ Special content for admin users.
 {% if user_experience == "beginner" %}
 You excel at breaking down complex topics into simple, digestible explanations.
 You always check for understanding and provide plenty of examples.
-{% elif user_experience == "intermediate" %}
+{% elseif user_experience == "intermediate" %}
 You can assume basic knowledge but still provide clear explanations for advanced concepts.
 {% else %}
 You can use technical terminology and focus on nuanced, expert-level insights.
@@ -202,13 +268,13 @@ Debug mode is active. Additional information will be provided.
 - Evaluate responses critically
 - Provide constructive feedback
 - Focus on problem-solving approach
-{% elif context.session_type == "tutoring" %}
+{% elseif context.session_type == "tutoring" %}
 ## Tutoring Mode
 - Be patient and encouraging
 - Break down complex concepts
 - Provide multiple examples
 - Check for understanding frequently
-{% elif context.session_type == "consultation" %}
+{% elseif context.session_type == "consultation" %}
 ## Consultation Mode
 - Listen carefully to requirements
 - Ask clarifying questions
@@ -229,7 +295,7 @@ Here's a code example:
 def hello_world():
     print("Hello, World!")
 ```
-{% elif domain == "writing" %}
+{% elseif domain == "writing" %}
 Here's a writing example:
 "The quick brown fox jumps over the lazy dog."
 {% else %}
@@ -261,7 +327,7 @@ Le ayudaré con sus consultas de manera profesional.
 Te ayudaré con tus preguntas de manera amigable.
 {% endif %}
 
-{% elif language == "french" %}
+{% elseif language == "french" %}
 # Assistant IA
 
 Bonjour, je suis votre assistant d'intelligence artificielle.
@@ -294,7 +360,7 @@ I'll help you with your questions in a friendly way.
 - Debug information included
 - Verbose logging active
 - Test data may be used
-{% elif environment == "staging" %}
+{% elseif environment == "staging" %}
 ## Staging Mode
 - Limited error details
 - Performance monitoring active
@@ -372,15 +438,15 @@ Standard content
 Advanced content here.
 {% endif %}
 
-<!-- Avoid - complex nested logic -->
-{% if user_type == "premium" %}
-  {% if region == "US" %}
-    {% if feature_enabled %}
-      {% if not maintenance_mode %}
-        Complex nested content
-      {% endif %}
-    {% endif %}
-  {% endif %}
+<!-- Better - use elseif chains instead of deep nesting -->
+{% if user_type == "premium" and region == "US" and feature_enabled and not maintenance_mode %}
+  Premium US features available
+{% elseif user_type == "premium" and region == "US" %}
+  Premium US features temporarily unavailable
+{% elseif user_type == "premium" %}
+  Premium features available in your region
+{% else %}
+  Standard features available
 {% endif %}
 ```
 
@@ -403,7 +469,7 @@ Advanced content here.
 <!-- Establish patterns and stick to them -->
 {% if user_level == "beginner" %}
   Beginner content
-{% elif user_level == "intermediate" %}
+{% elseif user_level == "intermediate" %}
   Intermediate content
 {% else %}
   Advanced content
@@ -412,7 +478,7 @@ Advanced content here.
 <!-- Use the same pattern elsewhere -->
 {% if complexity == "simple" %}
   Simple explanation
-{% elif complexity == "moderate" %}
+{% elseif complexity == "moderate" %}
   Moderate explanation
 {% else %}
   Complex explanation
@@ -461,7 +527,7 @@ Intermediate information for some users.
 {% if error_occurred %}
   {% if error_type == "validation" %}
     Please check your input and try again.
-  {% elif error_type == "network" %}
+  {% elseif error_type == "network" %}
     Network error. Please check your connection.
   {% else %}
     An unexpected error occurred. Please try again later.
