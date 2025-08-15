@@ -5,7 +5,9 @@ description: Learn what YAPL is and why it's useful for AI prompt engineering
 
 # Introduction to YAPL
 
-YAPL (Yet Another Prompt Language) is a template language specifically designed for creating dynamic, maintainable AI prompts. It addresses the common challenges in prompt engineering by providing a structured way to build, compose, and reuse prompt components.
+Have you ever developed a multi-agent system and found yourself juggling prompts in various formats, scattered across different files, with little visibility or consistency? This is a common challenge in AI prompt engineering—maintaining clarity and control as complexity grows.
+
+YAPL (Yet Another Prompt Language) is purpose-built to solve these problems. It offers a structured, unified approach for creating dynamic, maintainable AI prompts. With YAPL, you can organize, compose, and reuse prompt components efficiently, ensuring your workflow remains streamlined and scalable as your projects evolve.
 
 ## What is YAPL?
 
@@ -42,7 +44,7 @@ YAPL addresses these issues by providing:
 
 ### Templates as Files
 
-YAPL templates are typically stored as `.yapl` files (often with additional extensions like `.md.yapl` for Markdown-based prompts). This makes them easy to organize, version control, and collaborate on.
+YAPL templates are stored as `.yapl` files (often with additional extensions like `.md.yapl` for Markdown-based prompts). This makes them easy to organize, version control, and collaborate on. You can use any text based format, like JSON, Markdown or just plain text.
 
 ### Inheritance Hierarchy
 
@@ -62,13 +64,11 @@ YAPL is particularly useful for:
 
 - **AI Agent Systems**: Creating consistent agent personalities with customizable behaviors
 - **Multi-modal Prompts**: Adapting prompts for different AI models or capabilities
-- **User-specific Prompts**: Tailoring prompts based on user experience level or preferences
 - **Workflow Automation**: Building prompt libraries for automated AI workflows
-- **Prompt Libraries**: Creating and maintaining large collections of related prompts
 
 ## Next Steps
 
-Ready to get started? Check out the [Installation](/installation/) guide to set up YAPL, or jump straight to the [Quick Start](/quick-start/) to see YAPL in action.
+Ready to get started? Check out the [Installation](/documentation/installation/) guide to set up YAPL, or jump straight to the [Quick Start](/documentation/quick-start/) to see YAPL in action.
 
 :::tip[Try the Interactive Playground]
 Want to experiment with YAPL right away? Visit the [YAPL Playground](https://yapl-language.github.io#playground) to try examples in your browser without installing anything.

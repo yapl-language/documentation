@@ -1,75 +1,75 @@
 ---
-title: YAPL - Yet Another Prompt Language
-description: A powerful template language designed specifically for AI prompts
-template: splash
-hero:
-  tagline: A tiny, pink-powered prompt language for AI agents
-  image:
-    alt: YAPL logo
-    file: ../../assets/yapl-logo.svg
-  actions:
-    - text: Get Started
-      link: /quick-start/
-      icon: right-arrow
-      variant: primary
-    - text: View Examples
-      link: /examples/basic/
-      icon: open-book
-      variant: secondary
-    - text: Visit Website
-      link: https://yapl-language.github.io
-      icon: external
-      variant: minimal
+title: Introduction to YAPL
+description: Learn what YAPL is and why it's useful for AI prompt engineering
 ---
 
-import { Card, CardGrid } from '@astrojs/starlight/components';
+# Introduction to YAPL
 
-YAPL is a markdown-first, composable templating language for AI agents. Define **blocks**, reuse with **mixins**, and inject **variables** to create dynamic, maintainable prompts that scale.
+Have you ever developed a multi-agent system and found yourself juggling prompts in various formats, scattered across different files, with little visibility or consistency? This is a common challenge in AI prompt engineering—maintaining clarity and control as complexity grows.
 
-## Why YAPL?
+YAPL (Yet Another Prompt Language) is purpose-built to solve these problems. It offers a structured, unified approach for creating dynamic, maintainable AI prompts. With YAPL, you can organize, compose, and reuse prompt components efficiently, ensuring your workflow remains streamlined and scalable as your projects evolve.
 
-<CardGrid stagger>
-	<Card title="Template Inheritance" icon="puzzle">
-		Build complex prompts by extending base templates, just like in web frameworks. Define common structures once and customize them for specific use cases.
-	</Card>
-	<Card title="Mixins & Composition" icon="add-document">
-		Compose prompts from reusable components. Mix and match different behaviors, tones, and capabilities without duplication.
-	</Card>
-	<Card title="Dynamic Variables" icon="setting">
-		Use variables with default values to create flexible prompts that adapt to different contexts and requirements.
-	</Card>
-	<Card title="Conditional Logic" icon="laptop">
-		Include or exclude content based on conditions, creating prompts that adapt to user types, difficulty levels, or specific scenarios.
-	</Card>
-</CardGrid>
+## What is YAPL?
 
-## Quick Example
+YAPL is a template language that extends the concept of traditional templating systems to the domain of AI prompt engineering. It allows you to:
 
-```yapl title="agent-template.md.yapl"
-{% extends "base/system.md" %}
-{% mixin "mixins/friendly.md" %}
+- **Create reusable prompt templates** that can be customized for different use cases
+- **Compose complex prompts** from smaller, manageable components
+- **Use conditional logic** to adapt prompts based on context
+- **Manage variables and defaults** to make prompts flexible and robust
+- **Control whitespace** to ensure clean, properly formatted output
 
-{% block persona %}
-{{ super() }}
-You are {{ agent_type | default("a helpful assistant") }} specializing in {{ domain }}.
-{% endblock %}
+## Why Use YAPL?
 
-{% block guidance %}
-{{ super() }}
-{% if user_level == "beginner" %}
-Use simple language and provide step-by-step explanations.
-{% else %}
-You can use technical terminology and advanced concepts.
-{% endif %}
-{% endblock %}
-```
+### Traditional Approach Problems
 
-:::note[Syntax Highlighting]
-YAPL uses a Twig-like syntax with `{{ }}` for variables and `{% %}` for directives. The syntax highlighting above shows YAPL-specific tokens in the brand pink color scheme.
-:::
+Without a templating system, AI prompts often suffer from:
 
-This creates a flexible AI agent prompt that inherits from a base system template, adds friendly behavior through a mixin, and adapts its communication style based on the user's experience level.
+- **Duplication**: Similar prompts are copied and modified, leading to maintenance nightmares
+- **Inconsistency**: Changes to common elements require updates in multiple places
+- **Complexity**: Large prompts become unwieldy and hard to understand
+- **Inflexibility**: Hard to adapt prompts for different contexts or user types
 
-:::tip[Try it yourself!]
-Visit the [YAPL Playground](https://yapl-language.github.io#playground) to experiment with this example interactively.
+### YAPL Solutions
+
+YAPL addresses these issues by providing:
+
+1. **Template Inheritance**: Define base templates and extend them for specific use cases
+2. **Mixins**: Compose prompts from reusable components
+3. **Variables**: Use placeholders with default values for flexibility
+4. **Conditionals**: Include or exclude content based on runtime conditions
+5. **Includes**: Break large prompts into manageable, reusable pieces
+
+## Core Concepts
+
+### Templates as Files
+
+YAPL templates are stored as `.yapl` files (often with additional extensions like `.md.yapl` for Markdown-based prompts). This makes them easy to organize, version control, and collaborate on. You can use any text based format, like JSON, Markdown or just plain text.
+
+### Inheritance Hierarchy
+
+Like object-oriented programming, YAPL supports inheritance where child templates can extend parent templates, overriding specific blocks while inheriting the overall structure.
+
+### Composition over Inheritance
+
+While inheritance is powerful, YAPL also supports mixins for composition, allowing you to combine multiple behaviors without deep inheritance hierarchies.
+
+### Runtime Flexibility
+
+Variables and conditionals allow the same template to generate different outputs based on the context in which it's rendered.
+
+## Use Cases
+
+YAPL is particularly useful for:
+
+- **AI Agent Systems**: Creating consistent agent personalities with customizable behaviors
+- **Multi-modal Prompts**: Adapting prompts for different AI models or capabilities
+- **Workflow Automation**: Building prompt libraries for automated AI workflows
+
+## Next Steps
+
+Ready to get started? Check out the [Installation](/installation/) guide to set up YAPL, or jump straight to the [Quick Start](/quick-start/) to see YAPL in action.
+
+:::tip[Try the Interactive Playground]
+Want to experiment with YAPL right away? Visit the [YAPL Playground](https://yapl-language.github.io#playground) to try examples in your browser without installing anything.
 :::

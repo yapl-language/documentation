@@ -37,11 +37,11 @@ I'll assume you're familiar with the basics.
 
 ```yapl
 {% if user_level == "beginner" %}
-Let's start with the fundamentals.
+  Let's start with the fundamentals.
 {% elseif user_level == "intermediate" %}
-I'll cover the key concepts and some advanced topics.
+  I'll cover the key concepts and some advanced topics.
 {% else %}
-I'll focus on expert-level insights and edge cases.
+  I'll focus on expert-level insights and edge cases.
 {% endif %}
 ```
 
@@ -49,15 +49,15 @@ You can chain multiple `elseif` conditions:
 
 ```yapl
 {% if score >= 90 %}
-Grade: A (Excellent!)
+  Grade: A (Excellent!)
 {% elseif score >= 80 %}
-Grade: B (Good work!)
+  Grade: B (Good work!)
 {% elseif score >= 70 %}
-Grade: C (Satisfactory)
+  Grade: C (Satisfactory)
 {% elseif score >= 60 %}
-Grade: D (Needs improvement)
+  Grade: D (Needs improvement)
 {% else %}
-Grade: F (Please retry)
+  Grade: F (Please retry)
 {% endif %}
 ```
 
@@ -70,32 +70,32 @@ YAPL supports various comparison operators for numeric and string comparisons:
 ```yapl
 {# Equality comparisons #}
 {% if status == "active" %}
-Active user
+  Active user
 {% endif %}
 {% if count == 0 %}
-No items
+  No items
 {% endif %}
 {% if name != "guest" %}
-Welcome back!
+  Welcome back!
 {% endif %}
 
 {# Numeric comparisons #}
 {% if age >= 18 %}
-You are an adult
+  You are an adult
 {% endif %}
 {% if temperature > 30 %}
-It's hot today
+  It's hot today
 {% endif %}
 {% if score <= 60 %}
-Needs improvement
+  Needs improvement
 {% endif %}
 {% if items < 5 %}
-Low inventory
+  Low inventory
 {% endif %}
 
 {# String comparisons work too #}
 {% if version >= "2.0" %}
-New features available
+  New features available
 {% endif %}
 ```
 

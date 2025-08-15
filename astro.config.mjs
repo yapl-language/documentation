@@ -30,11 +30,14 @@ export default defineConfig({
         },
         {
           icon: "external",
-          label: "YAPL Website",
+          label: "Website",
           href: "https://yapl-language.github.io",
         },
       ],
       customCss: ["./src/styles/custom.css"],
+      components: {
+        Footer: "./src/components/Footer.astro",
+      },
       expressiveCode: {
         // Keep custom YAPL language support but otherwise use Starlight defaults
         shiki: { 
@@ -50,8 +53,8 @@ export default defineConfig({
         {
           label: "Getting Started",
           items: [
-            { label: "Introduction", slug: "introduction" },
             { label: "Installation", slug: "installation" },
+            { label: "Introduction", slug: "installation"},
             { label: "Quick Start", slug: "quick-start" },
           ],
         },
@@ -62,6 +65,7 @@ export default defineConfig({
             { label: "Template Inheritance", slug: "features/inheritance" },
             { label: "Mixins", slug: "features/mixins" },
             { label: "Conditionals", slug: "features/conditionals" },
+            { label: "For Loops", slug: "features/loops" },
             { label: "Includes", slug: "features/includes" },
             { label: "Whitespace Control", slug: "features/whitespace" },
           ],
@@ -80,6 +84,12 @@ export default defineConfig({
             { label: "Syntax Reference", slug: "reference/syntax" },
             { label: "API Reference", slug: "reference/api" },
             { label: "Configuration", slug: "reference/configuration" },
+          ],
+        },
+        {
+          label: "Help",
+          items: [
+            { label: "Troubleshooting", slug: "troubleshooting" },
           ],
         },
       ],

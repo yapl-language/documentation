@@ -106,20 +106,28 @@ Valid block names:
 
 ### Conditionals
 
-#### if/else/endif
+#### if/elseif/else/endif
 ```yapl
 {% if condition %}
-Content when true
+  Content when true
 {% endif %}
 
 {% if condition %}
-Content when true
+  Content when true
 {% else %}
-Content when false
+  Content when false
+{% endif %}
+
+{% if condition1 %}
+  First condition content
+{% elseif condition2 %}
+  Second condition content
+{% else %}
+  Default content
 {% endif %}
 
 {%- if condition -%}
-Tight whitespace control
+  Tight whitespace control
 {%- endif -%}
 ```
 
@@ -145,10 +153,37 @@ Tight whitespace control
 
 **Note:** The `not` operator is not supported. Use comparison operators instead: `{% if variable == false %}`
 
+**Logical operators:**
+```yapl
+{% if condition1 and condition2 %}
+{% if condition1 or condition2 %}
+```
+
 **Comparison with other variables:**
 ```yapl
 {% if user_type == admin_type %}
 {% if count == max_count %}
+```
+
+### For Loops
+
+#### for/endfor
+```yapl
+{% for item in items %}
+  {{ item }}
+{% endfor %}
+
+{% for user in users %}
+  - {{ user.name }}: {{ user.email }}
+{% endfor %}
+
+{% for item in ["a", "b", "c"] %}
+  {{ item }}
+{% endfor %}
+
+{%- for item in items -%}
+  Tight whitespace control
+{%- endfor -%}
 ```
 
 ### Super Function

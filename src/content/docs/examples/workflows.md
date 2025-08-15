@@ -263,6 +263,10 @@ Escalate to security team if:
 
 **Usage:**
 ```javascript
+import { NodeYAPL } from '@yapl-language/yapl.ts';
+
+const yapl = new NodeYAPL({ baseDir: './prompts' });
+
 // Multi-stage review workflow
 const reviewStages = [
   {

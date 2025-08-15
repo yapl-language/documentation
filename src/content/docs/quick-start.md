@@ -44,7 +44,7 @@ Create a simple Node.js script to test your template:
 
 ```javascript
 // test.js
-import { NodeYAPL } from 'yapl';
+import { NodeYAPL } from '@yapl-language/yapl.ts';
 
 const yapl = new NodeYAPL({ baseDir: './my-prompts' });
 

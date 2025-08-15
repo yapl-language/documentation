@@ -24,6 +24,8 @@ Welcome to YAPL!
 
 **Usage**:
 ```javascript
+import { NodeYAPL } from '@yapl-language/yapl.ts';
+
 const yapl = new NodeYAPL({ baseDir: './prompts' });
 
 // With variables

@@ -12,7 +12,7 @@ This guide covers all aspects of configuring YAPL for different environments, us
 ### Node.js Environment
 
 ```javascript
-import { NodeYAPL } from 'yapl';
+import { NodeYAPL } from '@yapl-language/yapl.ts';
 
 const yapl = new NodeYAPL({
   baseDir: './prompts',
@@ -30,7 +30,7 @@ const yapl = new NodeYAPL({
 ### Browser Environment
 
 ```javascript
-import { YAPL } from 'yapl';
+import { YAPL } from '@yapl-language/yapl.ts';
 
 const yapl = new YAPL({
   baseDir: '/virtual',
@@ -332,8 +332,8 @@ function createSecureYAPL(baseDir) {
 ### Custom File Resolution
 
 ```javascript
-import { NodeYAPL } from 'yapl';
-import { YAPLRenderer } from 'yapl';
+import { NodeYAPL } from '@yapl-language/yapl.ts';
+import { YAPLRenderer } from '@yapl-language/yapl.ts';
 
 const yapl = new NodeYAPL({
   baseDir: './prompts'
@@ -424,7 +424,7 @@ function createYAPL(config) {
 ### TypeScript Configuration
 
 ```typescript
-import { NodeYAPL, YAPLOptions } from 'yapl';
+import { NodeYAPL, YAPLOptions } from '@yapl-language/yapl.ts';
 
 interface ExtendedYAPLOptions extends YAPLOptions {
   logLevel?: 'debug' | 'info' | 'warn' | 'error';

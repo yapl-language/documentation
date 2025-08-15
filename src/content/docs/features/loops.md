@@ -88,10 +88,10 @@ For loops can be nested to iterate over multi-dimensional data:
 
 ```yapl
 {% for category in categories %}
-## {{ category.name }}
-{% for item in category.items %}
-- {{ item }}
-{% endfor %}
+  ## {{ category.name }}
+  {% for item in category.items %}
+    - {{ item }}
+  {% endfor %}
 {% endfor %}
 ```
 
@@ -113,6 +113,25 @@ Output:
 ## Vegetables
 - carrot
 - broccoli
+```
+
+### Complex Nested Loops
+
+You can combine loops with conditionals for more complex logic:
+
+```yapl
+{% for section in sections %}
+  ## {{ section.title }}
+  {% if section.items %}
+    {% for item in section.items %}
+      {% if item.visible %}
+        - **{{ item.name }}**: {{ item.description }}
+      {% endif %}
+    {% endfor %}
+  {% else %}
+    No items in this section.
+  {% endif %}
+{% endfor %}
 ```
 
 ## Whitespace Control

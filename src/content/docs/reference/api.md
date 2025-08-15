@@ -14,7 +14,7 @@ This page provides complete API documentation for the YAPL TypeScript library, i
 Base YAPL class for browser environments or when file system access is not needed.
 
 ```typescript
-import { YAPL } from 'yapl';
+import { YAPL } from '@yapl-language/yapl.ts';
 
 const yapl = new YAPL(options);
 ```
@@ -79,7 +79,7 @@ async render(templatePath: string, vars?: Record<string, unknown>): Promise<Prom
 Extended YAPL class with file system support for Node.js environments.
 
 ```typescript
-import { NodeYAPL } from 'yapl';
+import { NodeYAPL } from '@yapl-language/yapl.ts';
 
 const yapl = new NodeYAPL(options);
 ```
@@ -245,7 +245,7 @@ interface RendererOptions {
 ### Basic Setup
 
 ```typescript
-import { NodeYAPL } from 'yapl';
+import { NodeYAPL } from '@yapl-language/yapl.ts';
 
 const yapl = new NodeYAPL({
   baseDir: './prompts',
@@ -323,7 +323,7 @@ const customRenderer = new NodeYAPL({
 ### Browser Usage
 
 ```typescript
-import { YAPL } from 'yapl';
+import { YAPL } from '@yapl-language/yapl.ts';
 
 const yapl = new YAPL({ baseDir: '/virtual' });
 
@@ -334,7 +334,7 @@ const result = await yapl.renderString(templateString, variables);
 try {
   await yapl.render('template.yapl'); // Error!
 } catch (error) {
-  console.error(error.message); // "loadTemplateFile is not available in the browser"
+  console.error(error.message); // "File loading is not available. Provide a loadFile function in YAPLOptions or use renderString for browser usage."
 }
 ```
 
@@ -427,7 +427,7 @@ import {
   Prompt,
   Vars,
   RendererOptions
-} from 'yapl';
+} from '@yapl-language/yapl.ts';
 ```
 
 ## Error Types

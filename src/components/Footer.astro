@@ -1,0 +1,124 @@
+---
+// Custom footer component for YAPL documentation
+// Adapts the yapl-website footer to Starlight theme
+import Default from '@astrojs/starlight/components/Footer.astro';
+---
+
+<!-- Custom YAPL footer that extends the default Starlight footer -->
+<Default>
+  <slot />
+</Default>
+
+<footer class="yapl-footer">
+  <div class="footer-content">
+    <p class="footer-copyright">
+      © <span id="year"></span> YAPL. Made with 💗
+    </p>
+    <div class="footer-links">
+      <a href="https://yapl-language.github.io/documentation" class="footer-link">
+        Docs
+      </a>
+      <a href="https://yapl-language.github.io/#playground" class="footer-link">
+        Playground
+      </a>
+      <a 
+        href="https://marketplace.visualstudio.com/items?itemName=EinfachAI.yapl"
+        target="_blank"
+        rel="noopener"
+        class="footer-link"
+      >
+        VS Code Extension
+      </a>
+      <a 
+        href="https://github.com/yapl-language/yapl.ts"
+        target="_blank"
+        rel="noopener"
+        class="footer-link"
+      >
+        GitHub
+      </a>
+      <a 
+        href="https://discord.gg/your-invite"
+        target="_blank"
+        rel="noopener"
+        class="footer-link"
+      >
+        Discord
+      </a>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .yapl-footer {
+    border-top: 1px solid var(--sl-color-gray-5);
+    background: var(--sl-color-bg);
+    margin-top: 2rem;
+  }
+
+  .footer-content {
+    max-width: var(--sl-content-width);
+    margin: 0 auto;
+    padding: 1.5rem var(--sl-content-pad-x);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  @media (min-width: 50rem) {
+    .footer-content {
+      flex-direction: row;
+      gap: 2rem;
+    }
+  }
+
+  .footer-copyright {
+    font-size: var(--sl-text-sm);
+    color: var(--sl-color-gray-3);
+    margin: 0;
+  }
+
+  .footer-links {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  @media (min-width: 50rem) {
+    .footer-links {
+      justify-content: flex-end;
+    }
+  }
+
+  .footer-link {
+    font-size: var(--sl-text-sm);
+    color: var(--sl-color-gray-3);
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+
+  .footer-link:hover {
+    color: var(--sl-color-accent);
+    text-decoration: none;
+  }
+
+  .footer-link:focus-visible {
+    outline: 2px solid var(--sl-color-accent);
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+</style>
+
+<script>
+  // Set current year
+  document.addEventListener('DOMContentLoaded', () => {
+    const yearElement = document.getElementById('year');
+    if (yearElement) {
+      yearElement.textContent = new Date().getFullYear().toString();
+    }
+  });
+</script>

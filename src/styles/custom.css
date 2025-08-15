@@ -11,3 +11,90 @@
   --sl-color-accent-high: #fecdd3; /* lighter highlight against dark bg */
   --sl-color-accent-low: #3b0d1f;  /* deep tint for subtle surfaces */
 }
+
+/* Ensure the page layout accommodates the custom footer */
+html {
+  height: 100%;
+}
+
+body {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+#starlight__main {
+  flex: 1;
+}
+
+/* Additional footer styling integration */
+.yapl-footer {
+  flex-shrink: 0;
+}
+
+/* Style the website social link as a prominent button */
+.social-icons a[href="https://yapl-language.github.io"] {
+  background: linear-gradient(135deg, var(--sl-color-accent), #be185d);
+  color: white !important;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  font-size: 0.875rem;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 4px rgba(219, 39, 119, 0.2);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* Show the text label for the website button */
+.social-icons a[href="https://yapl-language.github.io"] .sr-only {
+  position: static !important;
+  width: auto !important;
+  height: auto !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  overflow: visible !important;
+  clip: auto !important;
+  white-space: normal !important;
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.social-icons a[href="https://yapl-language.github.io"]:hover {
+  background: linear-gradient(135deg, #be185d, var(--sl-color-accent));
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(219, 39, 119, 0.3);
+  color: white !important;
+}
+
+.social-icons a[href="https://yapl-language.github.io"]:focus-visible {
+  outline: 2px solid var(--sl-color-accent);
+  outline-offset: 2px;
+}
+
+/* Add some spacing between the GitHub icon and the website button */
+.social-icons {
+  gap: 1rem;
+}
+
+/* Responsive adjustments for the website button */
+@media (max-width: 50rem) {
+  .social-icons a[href="https://yapl-language.github.io"] {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.8rem;
+  }
+  
+  /* Hide text on mobile, keep only icon */
+  .social-icons a[href="https://yapl-language.github.io"] .sr-only {
+    position: absolute !important;
+    width: 1px !important;
+    height: 1px !important;
+    padding: 0 !important;
+    margin: -1px !important;
+    overflow: hidden !important;
+    clip: rect(0, 0, 0, 0) !important;
+    white-space: nowrap !important;
+  }
+}

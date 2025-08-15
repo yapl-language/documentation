@@ -5,7 +5,7 @@ description: How to install and set up YAPL in your project
 
 # Installation
 
-YAPL is available as a TypeScript/JavaScript library that can be used in both Node.js and browser environments.
+YAPL is available as a TypeScript/JavaScript library that can be used in both Node.js and browser environments, while the latter not makes much sense for most people.
 
 ## Prerequisites
 
@@ -18,13 +18,13 @@ Install YAPL using your preferred package manager:
 
 ```bash
 # npm
-npm install yapl
+npm install @yapl-language/yapl.ts
 
 # yarn
-yarn add yapl
+yarn add @yapl-language/yapl.ts
 
 # pnpm
-pnpm add yapl
+pnpm add @yapl-language/yapl.ts
 ```
 
 ## Basic Setup
@@ -34,19 +34,16 @@ pnpm add yapl
 For Node.js applications with file system access:
 
 ```typescript
-import { NodeYAPL } from 'yapl';
+import { NodeYAPL } from "@yapl-language/yapl.ts";
 
 const yapl = new NodeYAPL({
-  baseDir: './prompts', // Directory containing your .yapl files
-  cache: true,          // Enable file caching for better performance
-  strictPaths: true,    // Prevent path traversal outside baseDir
-  maxDepth: 20,         // Maximum template nesting depth
+  baseDir: "./prompts", // Directory containing your .yapl files
 });
 
-// Render a template file
-const result = await yapl.render('agent.md.yapl', {
-  name: 'Assistant',
-  domain: 'customer support'
+// Render a template file and pass your variables.
+const result = await yapl.render("agent.md.yapl", {
+  variable1: "Assistant",
+  variable2: "customer support",
 });
 
 console.log(result.content);
@@ -57,10 +54,10 @@ console.log(result.content);
 For browser applications or when you don't need file system access:
 
 ```typescript
-import { YAPL } from 'yapl';
+import { YAPL } from "@yapl-language/yapl.ts";
 
 const yapl = new YAPL({
-  baseDir: '/virtual', // Virtual base directory
+  baseDir: "/virtual", // Virtual base directory, is necessary to tell YAPL it's running in a Browser environment.
 });
 
 // Render template strings directly
@@ -70,8 +67,8 @@ Hello, {{ name | default("World") }}!
 `;
 
 const result = await yapl.renderString(templateSource, {
-  name: 'YAPL User',
-  greeting: 'Welcome to YAPL!'
+  name: "YAPL User",
+  greeting: "Welcome to YAPL!",
 });
 
 console.log(result.content);
@@ -81,25 +78,25 @@ console.log(result.content);
 
 ### YAPLOptions
 
-| Option | Type | Default | Description |
-|--------|------|---------|-------------|
-| `baseDir` | `string` | Required | Base directory for template files |
-| `cache` | `boolean` | `true` | Enable file caching (Node.js only) |
-| `strictPaths` | `boolean` | `true` | Prevent path traversal outside baseDir |
-| `maxDepth` | `number` | `20` | Maximum template nesting depth |
-| `whitespace` | `WhitespaceOptions` | See below | Whitespace control options |
+| Option        | Type                | Default   | Description                            |
+| ------------- | ------------------- | --------- | -------------------------------------- |
+| `baseDir`     | `string`            | Required  | Base directory for template files      |
+| `cache`       | `boolean`           | `true`    | Enable file caching (Node.js only)     |
+| `strictPaths` | `boolean`           | `true`    | Prevent path traversal outside baseDir |
+| `maxDepth`    | `number`            | `20`      | Maximum template nesting depth         |
+| `whitespace`  | `WhitespaceOptions` | See below | Whitespace control options             |
 
 ### WhitespaceOptions
 
-| Option | Type | Default | Description |
-|--------|------|---------|-------------|
-| `trimBlocks` | `boolean` | `true` | Remove newlines after block tags |
-| `lstripBlocks` | `boolean` | `true` | Remove leading whitespace before block tags |
-| `dedentBlocks` | `boolean` | `true` | Remove common indentation from block content |
+| Option         | Type      | Default | Description                                  |
+| -------------- | --------- | ------- | -------------------------------------------- |
+| `trimBlocks`   | `boolean` | `true`  | Remove newlines after block tags             |
+| `lstripBlocks` | `boolean` | `true`  | Remove leading whitespace before block tags  |
+| `dedentBlocks` | `boolean` | `true`  | Remove common indentation from block content |
 
 ## Directory Structure
 
-Organize your YAPL templates in a clear directory structure:
+Organize your YAPL templates in a clear directory structure like this for example, but you can use any structure you like:
 
 ```
 prompts/
@@ -122,46 +119,12 @@ prompts/
 
 ## File Extensions
 
-While YAPL templates can have any extension, common conventions include:
+YAPL templates can be written in many formats:
 
 - `.yapl` - Pure YAPL templates
 - `.md.yapl` - Markdown-based prompts with YAPL templating
 - `.txt.yapl` - Plain text prompts with YAPL templating
 - `.json.yapl` - JSON-structured prompts with YAPL templating
-
-## Verification
-
-Test your installation with a simple example:
-
-```typescript
-import { NodeYAPL } from 'yapl';
-import { writeFileSync, mkdirSync } from 'fs';
-
-// Create a test directory and template
-mkdirSync('./test-prompts', { recursive: true });
-writeFileSync('./test-prompts/hello.md.yapl', `
-# Hello {{ name | default("World") }}
-
-{% if message %}
-{{ message }}
-{% else %}
-Welcome to YAPL!
-{% endif %}
-`);
-
-// Test the installation
-const yapl = new NodeYAPL({ baseDir: './test-prompts' });
-const result = await yapl.render('hello.md.yapl', {
-  name: 'Developer',
-  message: 'YAPL is working correctly!'
-});
-
-console.log(result.content);
-// Output:
-// # Hello Developer
-// 
-// YAPL is working correctly!
-```
 
 ## VS Code Extension
 
@@ -170,10 +133,9 @@ For the best development experience, install the official YAPL VS Code extension
 [![Install VS Code Extension](https://img.shields.io/visual-studio-marketplace/v/yapl.yapl-vscode?style=for-the-badge&logo=visual-studio-code&logoColor=white&label=VS%20Code%20Extension&color=f472b6)](https://marketplace.visualstudio.com/items?itemName=yapl.yapl-vscode)
 
 The extension provides:
+
 - Syntax highlighting for `.yapl` files
-- Code snippets for common patterns
-- Future: IntelliSense and error diagnostics
 
 ## Next Steps
 
-Now that you have YAPL installed, check out the [Quick Start](/quick-start/) guide to learn the basics, or dive into the [Core Features](/features/variables/) documentation to explore YAPL's capabilities.
+Now that you have YAPL installed, check out the [Quick Start](/documentation/quick-start/) guide to learn the basics, or dive into the [Core Features](/documentation/features/variables/) documentation to explore YAPL's capabilities.

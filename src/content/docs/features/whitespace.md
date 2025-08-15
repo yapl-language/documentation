@@ -209,7 +209,7 @@ Here's an example:
 ### Inline Conditionals
 
 ```yapl
-Hello{{ ", " + title if title }}{{ name }}{{ "!" if excited else "." }}
+Hello{% if title %}, {{ title }}{% endif %} {{ name }}{% if excited %}!{% else %}.{% endif %}
 ```
 
 With variables:
@@ -221,26 +221,21 @@ With variables:
 ### Comma-separated Lists
 
 ```yapl
-Your skills include:
+Your skills include: 
 {%- for skill in skills -%}
-{%- if not loop.first %}, {% endif -%}
 {{ skill }}
+{%- if skill != skills.last %}, {% endif -%}
 {%- endfor %}.
 ```
 
-With `skills = ["Python", "JavaScript", "SQL"]`:
-```
-Your skills include: Python, JavaScript, SQL.
-```
+**Note:** YAPL doesn't have built-in loop variables like `loop.first` or `loop.last`. For comma-separated lists, consider using JavaScript to pre-format the data or handle formatting in your application logic.
 
 ### Paragraph Joining
 
 ```yapl
 {%- for paragraph in content -%}
-{%- if not loop.first %}
-
-{% endif -%}
 {{ paragraph }}
+
 {%- endfor %}
 ```
 
@@ -267,18 +262,28 @@ Your skills include: Python, JavaScript, SQL.
 {%- endblock %}
 ```
 
-## Template-specific Whitespa
-ce Control
+## Template-specific Whitespace Control
 
-You can override global whitespace settings for specific templates:
+**Note:** YAPL doesn't support per-render whitespace overrides. Whitespace settings are configured at the instance level. To use different whitespace settings, create separate YAPL instances:
 
 ```javascript
-// Render with custom whitespace settings
-const result = await yapl.renderString(template, variables, {
+// Instance for tight formatting
+const tightYapl = new NodeYAPL({
+  baseDir: './prompts',
+  whitespace: {
+    trimBlocks: true,
+    lstripBlocks: true,
+    dedentBlocks: true
+  }
+});
+
+// Instance for loose formatting  
+const looseYapl = new NodeYAPL({
+  baseDir: './prompts',
   whitespace: {
     trimBlocks: false,
     lstripBlocks: false,
-    dedentBlocks: true
+    dedentBlocks: false
   }
 });
 ```
@@ -310,28 +315,32 @@ const result = await yapl.renderString(template, variables, {
 {%- if items %}
 Items: 
 {%- for item in items -%}
-{{ item }}
-{%- if not loop.last %}, {% endif -%}
+{{ item }}{% if item != items.last %}, {% endif %}
 {%- endfor %}
 {%- endif %}
 ```
 
+**Note:** For complex list formatting, consider pre-processing your data in JavaScript before passing to YAPL.
+
 ### Conditional Punctuation
 
 ```yapl
-Hello{{ " " + name if name }}{{ "!" if enthusiastic else "." }}
+Hello{% if name %} {{ name }}{% endif %}{% if enthusiastic %}!{% else %}.{% endif %}
 ```
 
 ### Multi-line String Cleanup
 
-```yapl
-{%- set long_text -%}
-This is a very long piece of text that spans
-multiple lines and needs to be cleaned up
-for proper formatting in the output.
-{%- endset -%}
+**Note:** YAPL doesn't support `set` variables or string filters like `replace`. For complex string manipulation, pre-process your data in JavaScript:
 
-{{ long_text | replace('\n', ' ') | replace('  ', ' ') }}
+```javascript
+const processedText = longText
+  .replace(/\n/g, ' ')
+  .replace(/\s+/g, ' ')
+  .trim();
+
+const result = await yapl.renderString(template, { 
+  processed_text: processedText 
+});
 ```
 
 ## Best Practices
