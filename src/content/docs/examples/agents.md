@@ -102,10 +102,10 @@ This example shows how to build agents using a base template with mixins for dif
 {% block expertise %}
   {{ super() }}
   {% if programming_languages %}
-    You are proficient in: {{ programming_languages | join(", ") }}.
+    You are proficient in multiple programming languages.
   {% endif %}
   {% if frameworks %}
-    You have experience with: {{ frameworks | join(", ") }}.
+    You have experience with various frameworks and technologies.
   {% endif %}
 {% endblock %}
 ```

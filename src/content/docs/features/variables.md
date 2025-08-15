@@ -32,7 +32,7 @@ You are working on YAPL Documentation.
 
 ## Default Values
 
-Variables can have default values using the `default()` filter:
+Variables can have default values using the `default()` function:
 
 ```yapl
 Hello, {{ name | default("World") }}!
@@ -54,6 +54,8 @@ await yapl.renderString(template, {});
 await yapl.renderString(template, { name: 'Charlie' });
 // Output: Hello, Charlie! Your role is assistant.
 ```
+
+**Note:** YAPL only supports the `default()` function for providing fallback values. Other template filters like `upper`, `lower`, `join`, or `length` are not supported.
 
 ## Nested Object Access
 

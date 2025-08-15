@@ -222,7 +222,7 @@ Escalate to security team if:
 
 ## Review Stages
 {% for stage in review_stages %}
-### Stage {{ loop.index }}: {{ stage.name }}
+### {{ stage.name }}
 **Reviewer:** {{ stage.reviewer_type }}
 **Focus:** {{ stage.focus }}
 **Estimated Time:** {{ stage.estimated_time }}
@@ -238,7 +238,10 @@ Escalate to security team if:
 **Template:** `{{ stage.template }}`
 **Variables:**
 ```json
-{{ stage.variables | tojson }}
+{
+  "review_stage": "{{ stage.variables.review_stage }}",
+  "review_urgency": "{{ stage.variables.review_urgency }}"
+}
 ```
 
 ---
@@ -342,8 +345,8 @@ This example shows how to create a content generation system that adapts based o
 {% for segment in audience_segments %}
 ### {{ segment.name }}
 - **Demographics:** {{ segment.demographics }}
-- **Interests:** {{ segment.interests | join(", ") }}
-- **Preferred Platforms:** {{ segment.platforms | join(", ") }}
+- **Interests:** {{ segment.interests }}
+- **Preferred Platforms:** {{ segment.preferred_platforms }}
 - **Content Preferences:** {{ segment.content_preferences }}
 - **Engagement Patterns:** {{ segment.engagement_patterns }}
 {% endfor %}
@@ -400,21 +403,20 @@ This example shows how to create a content generation system that adapts based o
 {% if post_type == "thread" %}
 ## Thread Structure
 {% for tweet in thread_content %}
-**Tweet {{ loop.index }}** ({{ tweet | length }}/280 characters)
+**Tweet** ({{ tweet }} characters)
 {{ tweet }}
 
 {% endfor %}
 
-**Hashtags:** {{ hashtags | join(" ") }}
-**Mentions:** {{ mentions | join(" ") }}
+**Hashtags:** {% for tag in hashtags %}{{ tag }} {% endfor %}
+**Mentions:** {% for mention in mentions %}{{ mention }} {% endfor %}
 
 {% else %}
 ## Single Tweet
 {{ content }}
 
-**Character Count:** {{ content | length }}/280
-**Hashtags:** {{ hashtags | join(" ") }}
-**Mentions:** {{ mentions | join(" ") }}
+**Hashtags:** {% for tag in hashtags %}{{ tag }} {% endfor %}
+**Mentions:** {% for mention in mentions %}{{ mention }} {% endfor %}
 {% endif %}
 
 {% elif platform == "linkedin" %}
@@ -428,7 +430,7 @@ This example shows how to create a content generation system that adapts based o
 {{ cta_text }}
 {% endif %}
 
-**Hashtags:** {{ hashtags | join(" ") }}
+**Hashtags:** {% for tag in hashtags %}{{ tag }} {% endfor %}
 **Target Audience:** {{ target_audience }}
 
 {% elif platform == "instagram" %}
@@ -440,9 +442,9 @@ This example shows how to create a content generation system that adapts based o
 ## Visual Requirements
 - **Image Specs:** {{ image_specs | default("1080x1080px") }}
 - **Style:** {{ visual_style }}
-- **Brand Elements:** {{ brand_elements | join(", ") }}
+- **Brand Elements:** {% for element in brand_elements %}{{ element }} {% endfor %}
 
-**Hashtags:** {{ hashtags | join(" ") }}
+**Hashtags:** {% for tag in hashtags %}{{ tag }} {% endfor %}
 **Location Tag:** {{ location_tag }}
 
 {% endif %}
@@ -558,9 +560,9 @@ This example shows how to create a content generation system that adapts based o
 {% endfor %}
 
 ### Reporting Schedule
-- **Daily:** {{ daily_metrics | join(", ") }}
-- **Weekly:** {{ weekly_metrics | join(", ") }}
-- **Monthly:** {{ monthly_metrics | join(", ") }}
+- **Daily:** {% for metric in daily_metrics %}{{ metric }} {% endfor %}
+- **Weekly:** {% for metric in weekly_metrics %}{{ metric }} {% endfor %}
+- **Monthly:** {% for metric in monthly_metrics %}{{ metric }} {% endfor %}
 
 ### Optimization Triggers
 {% for trigger in optimization_triggers %}
@@ -638,7 +640,7 @@ This example demonstrates a sophisticated educational system that adapts content
 - **Subject:** {{ subject }}
 - **Level:** {{ difficulty_level }}
 - **Duration:** {{ estimated_duration }}
-- **Prerequisites:** {{ prerequisites | join(", ") }}
+- **Prerequisites:** {% for prereq in prerequisites %}{{ prereq }} {% endfor %}
 
 {% block learner_profile %}
 ## Learner Profile
@@ -647,7 +649,7 @@ This example demonstrates a sophisticated educational system that adapts content
 - **Learning Style:** {{ learner.learning_style }}
 - **Preferred Pace:** {{ learner.preferred_pace }}
 - **Available Time:** {{ learner.available_time_per_week }} hours/week
-- **Goals:** {{ learner.goals | join(", ") }}
+- **Goals:** {% for goal in learner.goals %}{{ goal }} {% endfor %}
 
 ### Learning Preferences
 {% if learner.preferences %}
@@ -661,11 +663,11 @@ This example demonstrates a sophisticated educational system that adapts content
 ## Adaptive Curriculum
 
 {% for module in modules %}
-### Module {{ loop.index }}: {{ module.title }}
+### {{ module.title }}
 {% include "components/learning-module.md.yapl" with {
   "module": module,
   "learner": learner,
-  "progress": progress.modules[loop.index0] if progress else {},
+  "progress": progress,
   "adaptation_rules": adaptation_rules
 } %}
 {% endfor %}

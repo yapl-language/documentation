@@ -283,7 +283,7 @@ You've now seen the core features of YAPL in action:
 
 Ready to dive deeper? Explore the detailed documentation for each feature:
 
-- [Variables](/features/variables/) - Learn about variable interpolation and filters
+- [Variables](/features/variables/) - Learn about variable interpolation and default values
 - [Template Inheritance](/features/inheritance/) - Master the extends/block system
 - [Mixins](/features/mixins/) - Understand composition patterns
 - [Conditionals](/features/conditionals/) - Explore conditional logic

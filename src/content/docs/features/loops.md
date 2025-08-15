@@ -148,7 +148,7 @@ If the array is empty or undefined, the for loop content is simply skipped:
 
 ```yapl
 {% for item in emptyArray %}
-This won't be rendered
+  This won't be rendered
 {% endfor %}
 ```
 
@@ -158,11 +158,11 @@ For loops work seamlessly with conditional statements:
 
 ```yapl
 {% for user in users %}
-{% if user.active %}
-- {{ user.name }} (Active)
-{% else %}
-- {{ user.name }} (Inactive)
-{% endif %}
+  {% if user.active %}
+    - {{ user.name }} (Active)
+  {% else %}
+    - {{ user.name }} (Inactive)
+  {% endif %}
 {% endfor %}
 ```
 
@@ -177,18 +177,18 @@ For loops work seamlessly with conditional statements:
 2. **Handle empty arrays gracefully**: Consider adding conditional checks for empty arrays
    ```yapl
    {% if techniques %}
-   {% for technique in techniques %}
-   - {{ technique.name }}
-   {% endfor %}
+     {% for technique in techniques %}
+       - {{ technique.name }}
+     {% endfor %}
    {% else %}
-   No techniques available.
+     No techniques available.
    {% endif %}
    ```
 
 3. **Use whitespace control appropriately**: Control whitespace to get the desired output formatting
    ```yapl
    {%- for item in items -%}
-   {{ item }}{% if not loop.last %}, {% endif %}
+     {{ item }}
    {%- endfor -%}
    ```
 

@@ -38,6 +38,8 @@ can span several lines
 {{ boolean | default(true) }}
 ```
 
+**Note:** YAPL only supports the `default()` function. Other filters like `upper`, `lower`, `join`, `length`, etc. are not supported.
+
 ### Whitespace Control
 
 ```yapl
@@ -139,8 +141,9 @@ Tight whitespace control
 **Truthiness:**
 ```yapl
 {% if variable %}          <!-- True if variable exists and is truthy -->
-{% if not variable %}      <!-- True if variable is falsy or undefined -->
 ```
+
+**Note:** The `not` operator is not supported. Use comparison operators instead: `{% if variable == false %}`
 
 **Comparison with other variables:**
 ```yapl

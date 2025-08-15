@@ -35,7 +35,6 @@ You have standard access.
 {{ nested.property }}
 {{ array.0 }}
 {{ variable | default("fallback") }}
-{{ text | upper | trim }}
 ```
 
 ## Directives
@@ -138,7 +137,7 @@ The YAPL code blocks above should show:
 - **Green colors** for strings (`"text"`, `'text'`)
 - **Gray colors** for comments (`{# comment #}`)
 - **Bold pink** for keywords (`extends`, `block`, `if`, `else`, `endif`, etc.)
-- **Pink accents** for filters (`| default`, `| upper`)
+- **Pink accents** for filters (`| default`)
 
 ## Verification
 

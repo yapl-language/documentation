@@ -69,18 +69,34 @@ YAPL supports various comparison operators for numeric and string comparisons:
 
 ```yapl
 {# Equality comparisons #}
-{% if status == "active" %}Active user{% endif %}
-{% if count == 0 %}No items{% endif %}
-{% if name != "guest" %}Welcome back!{% endif %}
+{% if status == "active" %}
+Active user
+{% endif %}
+{% if count == 0 %}
+No items
+{% endif %}
+{% if name != "guest" %}
+Welcome back!
+{% endif %}
 
 {# Numeric comparisons #}
-{% if age >= 18 %}You are an adult{% endif %}
-{% if temperature > 30 %}It's hot today{% endif %}
-{% if score <= 60 %}Needs improvement{% endif %}
-{% if items < 5 %}Low inventory{% endif %}
+{% if age >= 18 %}
+You are an adult
+{% endif %}
+{% if temperature > 30 %}
+It's hot today
+{% endif %}
+{% if score <= 60 %}
+Needs improvement
+{% endif %}
+{% if items < 5 %}
+Low inventory
+{% endif %}
 
 {# String comparisons work too #}
-{% if version >= "2.0" %}New features available{% endif %}
+{% if version >= "2.0" %}
+New features available
+{% endif %}
 ```
 
 **Supported operators:**
@@ -94,9 +110,20 @@ YAPL supports various comparison operators for numeric and string comparisons:
 ### Boolean Values
 
 ```yapl
-{% if is_premium %}Premium features enabled{% endif %}
-{% if not is_guest %}Welcome back!{% endif %}
-{% if debug_mode %}Debug information will be shown{% endif %}
+{% if is_premium %}
+  Premium features enabled
+{% endif %}
+{% if debug_mode %}
+  Debug information will be shown
+{% endif %}
+```
+
+**Note:** YAPL doesn't support the `not` operator. Use comparison operators instead:
+
+```yapl
+{% if is_guest == false %}
+  Welcome back!
+{% endif %}
 ```
 
 ### Variable Existence
@@ -114,7 +141,7 @@ Hello, guest!
 
 {# Check if variable is empty #}
 {% if items is not empty %}
-You have {{ items.length }} items.
+You have items in your list.
 {% else %}
 Your list is empty.
 {% endif %}
@@ -179,26 +206,24 @@ Error: {{ error_message }}
 
 ### Multiple Conditions
 
-While YAPL doesn't support `and`/`or` operators directly, you can achieve similar results with nested conditions:
+YAPL supports logical `and` and `or` operators for combining conditions:
 
 ```yapl
-{% if user_type == "premium" %}
-  {% if region == "US" %}
-    US Premium features available.
-  {% endif %}
+{# AND operator #}
+{% if user_type == "premium" and region == "US" %}
+US Premium features available.
 {% endif %}
 
-{# Equivalent to: if user_type == "premium" and region == "US" #}
-```
-
-For OR logic, use separate if statements:
-
-```yapl
-{% if user_type == "premium" %}
-Special content for premium users.
+{# OR operator #}
+{% if user_type == "premium" or user_type == "admin" %}
+Special content for privileged users.
 {% endif %}
-{% if user_type == "admin" %}
-Special content for admin users.
+
+{# Complex combinations #}
+{% if user.age >= 18 and user.verified and user.country == "US" %}
+You can access age-restricted US content.
+{% elseif user.age >= 16 and user.country == "UK" %}
+You can access UK content for your age group.
 {% endif %}
 ```
 
