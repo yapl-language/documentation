@@ -1,12 +1,17 @@
 // @ts-check
 import { defineConfig } from "astro/config";
 import starlight from "@astrojs/starlight";
-import { loadYaplGrammars } from "./src/utils/yapl-grammars.mjs";
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 // https://astro.build/config
 export default defineConfig({
   site: 'https://yapl-language.github.io',
-  base: '/documentation',
+  // base: '/documentation', // Commented out for local development
   integrations: [
     starlight({
       title: "YAPL Documentation",
@@ -32,7 +37,14 @@ export default defineConfig({
       customCss: ["./src/styles/custom.css"],
       expressiveCode: {
         // Keep custom YAPL language support but otherwise use Starlight defaults
-        shiki: { langs: loadYaplGrammars() },
+        shiki: { 
+          langs: [
+            // Load YAPL grammar following Starlight's recommended approach
+            JSON.parse(
+              fs.readFileSync(path.resolve(__dirname, 'src/grammars/yapl.tmLanguage.json'), 'utf-8')
+            )
+          ]
+        },
       },
       sidebar: [
         {

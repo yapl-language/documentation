@@ -1,6 +1,6 @@
 {
+  "name": "yapl",
   "scopeName": "source.yapl",
-  "name": "YAPL",
   "fileTypes": ["yapl"],
   "patterns": [
     {
@@ -18,17 +18,22 @@
       "name": "comment.block.yapl",
       "begin": "\\{#",
       "end": "#\\}",
-      "contentName": "comment.block.content.yapl"
+      "patterns": [
+        {
+          "match": ".",
+          "name": "comment.block.yapl.inner"
+        }
+      ]
     },
     "variable": {
       "name": "meta.interpolation.yapl",
-      "begin": "\\{\\{-?\\s*",
-      "end": "\\s*-?\\}\\}",
+      "begin": "\\{\\{\\-?\\s*",
       "beginCaptures": {
         "0": {
           "name": "punctuation.definition.interpolation.begin.yapl"
         }
       },
+      "end": "\\s*\\-?\\}\\}",
       "endCaptures": {
         "0": {
           "name": "punctuation.definition.interpolation.end.yapl"
@@ -36,23 +41,19 @@
       },
       "patterns": [
         {
-          "match": "\\b(default|upper|lower|trim|length)\\b",
+          "match": "\\|\\s*[a-zA-Z_][a-zA-Z0-9_]*",
           "name": "support.function.filter.yapl"
-        },
-        {
-          "match": "\\|",
-          "name": "keyword.operator.filter.yapl"
         },
         {
           "match": "[a-zA-Z_][a-zA-Z0-9_\\.]*",
           "name": "variable.other.yapl"
         },
         {
-          "match": "\"[^\"]*\"|'[^']*'",
+          "match": "\\\"[^\\\"]*\\\"|'[^']*'",
           "name": "string.quoted.yapl"
         },
         {
-          "match": "\\b\\d+(\\.\\d+)?\\b",
+          "match": "\\b[0-9]+(\\.[0-9]+)?\\b",
           "name": "constant.numeric.yapl"
         },
         {
@@ -63,13 +64,13 @@
     },
     "directive": {
       "name": "meta.directive.yapl",
-      "begin": "\\{%-?\\s*",
-      "end": "\\s*-?%\\}",
+      "begin": "\\{\\%\\-?\\s*",
       "beginCaptures": {
         "0": {
           "name": "punctuation.section.directive.begin.yapl"
         }
       },
+      "end": "\\s*\\-?\\%\\}",
       "endCaptures": {
         "0": {
           "name": "punctuation.section.directive.end.yapl"
@@ -77,24 +78,20 @@
       },
       "patterns": [
         {
-          "match": "\\b(extends|block|endblock|include|with|mixin|if|else|elif|endif|for|endfor|super)\\b",
+          "match": "\\b(extends|block|endblock|include|with|mixin|use|import|as|if|else|elif|endif|for|in|endfor)\\b",
           "name": "keyword.control.yapl"
-        },
-        {
-          "match": "\\b(is|defined|not)\\b",
-          "name": "keyword.operator.yapl"
-        },
-        {
-          "match": "==|!=|<=|>=|<|>",
-          "name": "keyword.operator.comparison.yapl"
-        },
-        {
-          "match": "\"[^\"]*\"|'[^']*'",
-          "name": "string.quoted.yapl"
         },
         {
           "match": "[a-zA-Z_][a-zA-Z0-9_\\.:-]*",
           "name": "entity.name.yapl"
+        },
+        {
+          "match": "\\\"[^\\\"]*\\\"|'[^']*'",
+          "name": "string.quoted.yapl"
+        },
+        {
+          "match": "\\|\\s*[a-zA-Z_][a-zA-Z0-9_]*",
+          "name": "support.function.filter.yapl"
         }
       ]
     }
