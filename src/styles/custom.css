@@ -32,6 +32,11 @@ body {
   flex-shrink: 0;
 }
 
+/* Add rounded borders to the logo in the header */
+.site-title img {
+  border-radius: 5px;
+}
+
 /* Style the website social link as a prominent button */
 .social-icons a[href="https://yapl-language.github.io"] {
   background: linear-gradient(135deg, var(--sl-color-accent), #be185d);

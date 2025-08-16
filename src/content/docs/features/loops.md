@@ -21,18 +21,20 @@ Iterate over a simple array of values:
 
 ```yapl
 {% for fruit in fruits %}
-- {{ fruit }}
+  - {{ fruit }}
 {% endfor %}
 ```
 
 With variables:
+
 ```javascript
 {
-  fruits: ['apple', 'banana', 'cherry']
+  fruits: ["apple", "banana", "cherry"];
 }
 ```
 
 Output:
+
 ```
 - apple
 - banana
@@ -45,22 +47,30 @@ Iterate over arrays of objects to access their properties:
 
 ```yapl
 {% for technique in study_techniques %}
-- **{{ technique.name }}**: {{ technique.description }}
+  - **{{ technique.name }}**: {{ technique.description }}
 {% endfor %}
 ```
 
 With variables:
+
 ```javascript
 {
   study_techniques: [
-    { name: 'Pomodoro', description: '25-minute focused work sessions' },
-    { name: 'Spaced Repetition', description: 'Review material at increasing intervals' },
-    { name: 'Active Recall', description: 'Test yourself instead of re-reading' }
-  ]
+    { name: "Pomodoro", description: "25-minute focused work sessions" },
+    {
+      name: "Spaced Repetition",
+      description: "Review material at increasing intervals",
+    },
+    {
+      name: "Active Recall",
+      description: "Test yourself instead of re-reading",
+    },
+  ];
 }
 ```
 
 Output:
+
 ```
 - **Pomodoro**: 25-minute focused work sessions
 - **Spaced Repetition**: Review material at increasing intervals
@@ -73,11 +83,12 @@ You can iterate over array literals directly in the template:
 
 ```yapl
 {% for num in [1, 2, 3, 4, 5] %}
-{{ num }}{% if num < 5 %}, {% endif %}
+  {{ num }}{% if num < 5 %}, {% endif %}
 {% endfor %}
 ```
 
 Output:
+
 ```
 1, 2, 3, 4, 5
 ```
@@ -96,16 +107,18 @@ For loops can be nested to iterate over multi-dimensional data:
 ```
 
 With variables:
+
 ```javascript
 {
   categories: [
-    { name: 'Fruits', items: ['apple', 'banana'] },
-    { name: 'Vegetables', items: ['carrot', 'broccoli'] }
-  ]
+    { name: "Fruits", items: ["apple", "banana"] },
+    { name: "Vegetables", items: ["carrot", "broccoli"] },
+  ];
 }
 ```
 
 Output:
+
 ```
 ## Fruits
 - apple
@@ -115,32 +128,13 @@ Output:
 - broccoli
 ```
 
-### Complex Nested Loops
-
-You can combine loops with conditionals for more complex logic:
-
-```yapl
-{% for section in sections %}
-  ## {{ section.title }}
-  {% if section.items %}
-    {% for item in section.items %}
-      {% if item.visible %}
-        - **{{ item.name }}**: {{ item.description }}
-      {% endif %}
-    {% endfor %}
-  {% else %}
-    No items in this section.
-  {% endif %}
-{% endfor %}
-```
-
 ## Whitespace Control
 
 Like other YAPL constructs, for loops support whitespace control using the `-` modifier:
 
 ```yapl
 {%- for item in items -%}
-{{ item }}
+  {{ item }}
 {%- endfor -%}
 ```
 
@@ -157,6 +151,7 @@ YAPL will throw an error if you try to iterate over a non-array value:
 ```
 
 If `notAnArray` is a string or other non-array value, you'll get an error:
+
 ```
 For loop iterable must be an array, got: string
 ```
@@ -171,48 +166,27 @@ If the array is empty or undefined, the for loop content is simply skipped:
 {% endfor %}
 ```
 
-## Combining with Conditionals
-
-For loops work seamlessly with conditional statements:
-
-```yapl
-{% for user in users %}
-  {% if user.active %}
-    - {{ user.name }} (Active)
-  {% else %}
-    - {{ user.name }} (Inactive)
-  {% endif %}
-{% endfor %}
-```
-
 ## Best Practices
 
-1. **Use descriptive variable names**: Choose meaningful names for your iterator variables
-   ```yapl
-   {% for technique in study_techniques %}  <!-- Good -->
-   {% for t in study_techniques %}          <!-- Less clear -->
-   ```
+### 1. Use descriptive variable names
 
-2. **Handle empty arrays gracefully**: Consider adding conditional checks for empty arrays
-   ```yapl
-   {% if techniques %}
-     {% for technique in techniques %}
-       - {{ technique.name }}
-     {% endfor %}
-   {% else %}
-     No techniques available.
-   {% endif %}
-   ```
+Choose meaningful names for your iterator variables
 
-3. **Use whitespace control appropriately**: Control whitespace to get the desired output formatting
-   ```yapl
-   {%- for item in items -%}
-     {{ item }}
-   {%- endfor -%}
-   ```
+```yapl
+{% for technique in study_techniques %}  <!-- Good -->
+{% for t in study_techniques %}          <!-- Less clear -->
+```
 
-## Performance Considerations
+### 2. Handle empty arrays gracefully
 
-- For loops are processed recursively, so deeply nested loops may impact performance
-- The maximum template depth (default: 20) applies to nested for loops
-- Large arrays are processed efficiently, but consider pagination for very large datasets
+Consider adding conditional checks for empty arrays
+
+```yapl
+{% if techniques %}
+  {% for technique in techniques %}
+    - {{ technique.name }}
+  {% endfor %}
+{% else %}
+  No techniques available.
+{% endif %}
+```

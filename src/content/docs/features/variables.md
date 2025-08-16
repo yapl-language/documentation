@@ -129,100 +129,9 @@ You have skills: {{ skills.0 }}{% if skills.1 %}, {{ skills.1 }}{% endif %}
 {% endif %}
 ```
 
-## Whitespace Control
-
-Control whitespace around variables using `-` modifiers:
-
-```yapl
-{{- name -}} (removes whitespace on both sides)
-{{ name -}} (removes whitespace on the right)
-{{- name }} (removes whitespace on the left)
-```
-
-Example:
-```yapl
-Hello,    {{- name -}}    !
-```
-
-With `name = "World"` becomes:
-```
-Hello,World!
-```
-
-## Advanced Examples
-
-### AI Agent Configuration
-```yapl
-# {{ agent_name | default("AI Assistant") }}
-
-You are {{ agent_name | default("an AI assistant") }} with expertise in {{ domain | default("general topics") }}.
-
-## Personality
-- Tone: {{ personality.tone | default("professional") }}
-- Verbosity: {{ personality.verbosity | default("moderate") }}
-- Formality: {{ personality.formality | default("balanced") }}
-
-## Capabilities
-{% if capabilities %}
-Your main capabilities include:
-{% for capability in capabilities %}
-- {{ capability }}
-{% endfor %}
-{% else %}
-You can help with a wide range of tasks and questions.
-{% endif %}
-
-## Context
-{% if context.user_type %}
-You are interacting with {{ context.user_type }} users.
-{% endif %}
-{% if context.session_goal %}
-The goal of this session is: {{ context.session_goal }}
-{% endif %}
-```
-
-### Dynamic Prompt Adaptation
-```yapl
-You are {{ role | default("a helpful assistant") }}.
-
-{% if expertise_level == "expert" %}
-You can use technical jargon and assume deep domain knowledge.
-{% else %}
-Explain concepts clearly and avoid unnecessary technical terms.
-{% endif %}
-
-{% if output_format %}
-Format your responses as {{ output_format }}.
-{% endif %}
-
-{% if constraints %}
-Additional constraints:
-{% for constraint in constraints %}
-- {{ constraint }}
-{% endfor %}
-{% endif %}
-
-Your primary focus is {{ primary_focus | default("being helpful and accurate") }}.
-```
-
-### Multi-language Support
-```yapl
-{% if language == "spanish" %}
-Hola, {{ name | default("usuario") }}. Soy tu asistente de IA.
-{% elif language == "french" %}
-Bonjour, {{ name | default("utilisateur") }}. Je suis votre assistant IA.
-{% else %}
-Hello, {{ name | default("user") }}. I am your AI assistant.
-{% endif %}
-
-{% if language %}
-Please respond in {{ language }}.
-{% endif %}
-```
-
 ## Best Practices
 
-### 1. Always Provide Defaults
+### 1. Provide Defaults
 ```yapl
 <!-- Good -->
 Hello, {{ name | default("there") }}!
@@ -275,38 +184,5 @@ Expected variables:
 # {{ agent_name | default("AI Assistant") }}
 ```
 
-## Common Patterns
-
-### Configuration Objects
-```yapl
-{% if config.debug_mode %}
-Debug mode is enabled.
-{% endif %}
-
-Timeout: {{ config.timeout | default(30) }} seconds
-Max retries: {{ config.max_retries | default(3) }}
-```
-
-### Feature Flags
-```yapl
-{% if features.advanced_mode %}
-Advanced features are available.
-{% endif %}
-
-{% if features.beta_features %}
-Beta features are enabled - use with caution.
-{% endif %}
-```
-
-### Environment-specific Content
-```yapl
-{% if environment == "development" %}
-This is a development environment.
-{% elif environment == "staging" %}
-This is a staging environment.
-{% else %}
-This is a production environment.
-{% endif %}
-```
 
 Variables are the building blocks of dynamic YAPL templates. Combined with other features like conditionals and inheritance, they enable you to create highly flexible and reusable prompt templates.

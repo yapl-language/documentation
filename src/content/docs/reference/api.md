@@ -14,7 +14,7 @@ This page provides complete API documentation for the YAPL TypeScript library, i
 Base YAPL class for browser environments or when file system access is not needed.
 
 ```typescript
-import { YAPL } from '@yapl-language/yapl.ts';
+import { YAPL } from "@yapl-language/yapl.ts";
 
 const yapl = new YAPL(options);
 ```
@@ -40,6 +40,7 @@ async renderString(
 ```
 
 **Parameters:**
+
 - `templateSource` - The YAPL template as a string
 - `vars` - Variables to pass to the template (optional)
 - `currentDir` - Directory to use for resolving relative includes (optional)
@@ -47,10 +48,11 @@ async renderString(
 **Returns:** Promise resolving to a `Prompt` object
 
 **Example:**
+
 ```typescript
 const result = await yapl.renderString(
   'Hello, {{ name | default("World") }}!',
-  { name: 'Alice' }
+  { name: "Alice" }
 );
 console.log(result.content); // "Hello, Alice!"
 ```
@@ -64,14 +66,40 @@ setBaseDir(dir: string): void
 ```
 
 **Parameters:**
+
 - `dir` - New base directory path
 
 ##### render()
 
-⚠️ **Not available in base YAPL class.** Throws an error. Use `NodeYAPL` for file-based rendering.
+Render a template with variables. In browser environments, this requires `loadFile` and `resolvePath` options to be provided.
 
 ```typescript
 async render(templatePath: string, vars?: Record<string, unknown>): Promise<Prompt>
+```
+
+**Parameters:**
+
+- `templatePath` - Path to template file or reference
+- `vars` - Variables to pass to the template (optional)
+
+**Returns:** Promise resolving to a `Prompt` object
+
+**Example:**
+
+```typescript
+// In browser with custom loaders
+const yapl = new YAPL({
+  baseDir: "/templates",
+  loadFile: async (path) => {
+    const response = await fetch(path);
+    return response.text();
+  },
+  resolvePath: (templateRef, fromDir, ensureExt) => {
+    return new URL(ensureExt(templateRef), fromDir).href;
+  },
+});
+
+const result = await yapl.render("template.yapl", { name: "World" });
 ```
 
 ### NodeYAPL
@@ -79,7 +107,7 @@ async render(templatePath: string, vars?: Record<string, unknown>): Promise<Prom
 Extended YAPL class with file system support for Node.js environments.
 
 ```typescript
-import { NodeYAPL } from '@yapl-language/yapl.ts';
+import { NodeYAPL } from "@yapl-language/yapl.ts";
 
 const yapl = new NodeYAPL(options);
 ```
@@ -103,16 +131,18 @@ async render(templatePath: string, vars?: Record<string, unknown>): Promise<Prom
 ```
 
 **Parameters:**
+
 - `templatePath` - Path to template file (relative to baseDir)
 - `vars` - Variables to pass to the template (optional)
 
 **Returns:** Promise resolving to a `Prompt` object
 
 **Example:**
+
 ```typescript
-const result = await yapl.render('agents/coder.md.yapl', {
-  language: 'TypeScript',
-  experience: 'expert'
+const result = await yapl.render("agents/coder.md.yapl", {
+  language: "TypeScript",
+  experience: "expert",
 });
 ```
 
@@ -129,34 +159,61 @@ interface YAPLOptions {
   strictPaths?: boolean;
   maxDepth?: number;
   whitespace?: WhitespaceOptions;
+  resolvePath?: (
+    templateRef: string,
+    fromDir: string,
+    ensureExt: (p: string) => string
+  ) => string;
+  loadFile?: (absolutePath: string) => Promise<string>;
+  ensureExtension?: (p: string) => string;
 }
 ```
 
 **Properties:**
 
 #### baseDir
+
 - **Type:** `string`
 - **Required:** Yes
 - **Description:** Base directory for template files
 
 #### cache
+
 - **Type:** `boolean`
-- **Default:** `true`
+- **Default:** `true` (Node.js only)
 - **Description:** Enable file caching (Node.js only)
 
 #### strictPaths
+
 - **Type:** `boolean`
-- **Default:** `true`
-- **Description:** Prevent path traversal outside baseDir
+- **Default:** `true` (Node.js only)
+- **Description:** Prevent path traversal outside baseDir (Node.js only)
 
 #### maxDepth
+
 - **Type:** `number`
 - **Default:** `20`
 - **Description:** Maximum template nesting depth
 
 #### whitespace
+
 - **Type:** `WhitespaceOptions`
 - **Description:** Whitespace control configuration
+
+#### resolvePath
+
+- **Type:** `function`
+- **Description:** Custom function to resolve template paths (browser environments)
+
+#### loadFile
+
+- **Type:** `function`
+- **Description:** Custom function to load template files (browser environments)
+
+#### ensureExtension
+
+- **Type:** `function`
+- **Description:** Custom function to ensure file extensions (browser environments)
 
 ### WhitespaceOptions
 
@@ -173,16 +230,19 @@ interface WhitespaceOptions {
 **Properties:**
 
 #### trimBlocks
+
 - **Type:** `boolean`
 - **Default:** `true`
 - **Description:** Remove newlines after block tags (`{% %}`)
 
 #### lstripBlocks
+
 - **Type:** `boolean`
 - **Default:** `true`
 - **Description:** Remove leading whitespace before block tags
 
 #### dedentBlocks
+
 - **Type:** `boolean`
 - **Default:** `true`
 - **Description:** Remove common indentation from block content
@@ -201,10 +261,12 @@ interface Prompt {
 **Properties:**
 
 #### content
+
 - **Type:** `string`
 - **Description:** The rendered template content
 
 #### usedFiles
+
 - **Type:** `string[]`
 - **Description:** Array of file paths used during rendering (includes, extends, mixins)
 
@@ -217,6 +279,7 @@ type Vars = Record<string, unknown>;
 ```
 
 Variables can be any JSON-serializable values:
+
 - Strings
 - Numbers
 - Booleans
@@ -224,20 +287,77 @@ Variables can be any JSON-serializable values:
 - Arrays
 - null
 
-### RendererOptions
+## Template Syntax
 
-Advanced configuration for the underlying renderer (typically not used directly).
+### Variables
 
-```typescript
-interface RendererOptions {
-  baseDir?: string;
-  strictPaths?: boolean;
-  maxDepth?: number;
-  whitespace?: WhitespaceOptions;
-  resolvePath?: (templateRef: string, fromDir: string, ensureExt: (p: string) => string) => string;
-  loadFile?: (absolutePath: string) => Promise<string>;
-  ensureExtension?: (p: string) => string;
-}
+```yapl
+{{ variable_name }}
+{{ variable_name | default("default value") }}
+{{ object.property }}
+{{ array.0 }}
+```
+
+### Conditionals
+
+```yapl
+{% if condition %}
+  Content when true
+{% else %}
+  Content when false
+{% endif %}
+
+{% if condition %}
+  Content when true
+{% elseif other_condition %}
+  Content when other condition is true
+{% else %}
+  Content when all conditions are false
+{% endif %}
+```
+
+### Loops
+
+```yapl
+{% for item in array %}
+  {{ item }}
+{% endfor %}
+
+{% for item in [1, 2, 3] %}
+  {{ item }}
+{% endfor %}
+```
+
+### Template Inheritance
+
+```yapl
+{% extends "base_template.yapl" %}
+
+{% block block_name %}
+  Block content
+  {{ super() }} {# Include parent block content #}
+{% endblock %}
+```
+
+### Mixins
+
+```yapl
+{% mixin "mixin_template.yapl" %}
+{% mixin "mixin1.yapl", "mixin2.yapl" %}
+```
+
+### Includes
+
+```yapl
+{% include "included_template.yapl" %}
+{% include "template.yapl" with { "variable": "value" } %}
+```
+
+### Comments
+
+```yapl
+{# This is a comment #}
+{#- This is a whitespace-trimmed comment -#}
 ```
 
 ## Usage Examples
@@ -245,18 +365,18 @@ interface RendererOptions {
 ### Basic Setup
 
 ```typescript
-import { NodeYAPL } from '@yapl-language/yapl.ts';
+import { NodeYAPL } from "@yapl-language/yapl.ts";
 
 const yapl = new NodeYAPL({
-  baseDir: './prompts',
+  baseDir: "./prompts",
   cache: true,
   strictPaths: true,
   maxDepth: 10,
   whitespace: {
     trimBlocks: true,
     lstripBlocks: true,
-    dedentBlocks: true
-  }
+    dedentBlocks: true,
+  },
 });
 ```
 
@@ -264,19 +384,22 @@ const yapl = new NodeYAPL({
 
 ```typescript
 // Render from file
-const fileResult = await yapl.render('agent.md.yapl', {
-  name: 'CodeBot',
-  language: 'Python'
+const fileResult = await yapl.render("agent.md.yapl", {
+  name: "CodeBot",
+  language: "Python",
 });
 
 // Render from string
-const stringResult = await yapl.renderString(`
+const stringResult = await yapl.renderString(
+  `
 Hello, {{ name }}!
 {% if role %}You are a {{ role }}.{% endif %}
-`, {
-  name: 'Assistant',
-  role: 'helper'
-});
+`,
+  {
+    name: "Assistant",
+    role: "helper",
+  }
+);
 
 console.log(fileResult.content);
 console.log(fileResult.usedFiles); // ['./prompts/agent.md.yapl', ...]
@@ -286,16 +409,16 @@ console.log(fileResult.usedFiles); // ['./prompts/agent.md.yapl', ...]
 
 ```typescript
 try {
-  const result = await yapl.render('nonexistent.yapl');
+  const result = await yapl.render("nonexistent.yapl");
 } catch (error) {
-  if (error.code === 'ENOENT') {
-    console.error('Template file not found');
-  } else if (error.message.includes('Max template depth exceeded')) {
-    console.error('Template recursion detected');
-  } else if (error.message.includes('escapes baseDir')) {
-    console.error('Path traversal attempt blocked');
+  if (error.code === "ENOENT") {
+    console.error("Template file not found");
+  } else if (error.message.includes("Max template depth exceeded")) {
+    console.error("Template recursion detected");
+  } else if (error.message.includes("escapes baseDir")) {
+    console.error("Path traversal attempt blocked");
   } else {
-    console.error('Template rendering error:', error.message);
+    console.error("Template rendering error:", error.message);
   }
 }
 ```
@@ -304,38 +427,40 @@ try {
 
 ```typescript
 // Create with minimal config
-const yapl = new NodeYAPL({ baseDir: './prompts' });
+const yapl = new NodeYAPL({ baseDir: "./prompts" });
 
 // Update base directory
-yapl.setBaseDir('./different-prompts');
+yapl.setBaseDir("./different-prompts");
 
 // Render with custom whitespace for specific template
 const customRenderer = new NodeYAPL({
-  baseDir: './prompts',
+  baseDir: "./prompts",
   whitespace: {
     trimBlocks: false,
     lstripBlocks: false,
-    dedentBlocks: true
-  }
+    dedentBlocks: true,
+  },
 });
 ```
 
 ### Browser Usage
 
 ```typescript
-import { YAPL } from '@yapl-language/yapl.ts';
+import { YAPL } from "@yapl-language/yapl.ts";
 
-const yapl = new YAPL({ baseDir: '/virtual' });
+const yapl = new YAPL({
+  baseDir: "/virtual",
+  resolvePath: (templateRef, fromDir, ensureExt) => {
+    return new URL(ensureExt(templateRef), fromDir).href;
+  },
+  loadFile: async (absolutePath) => {
+    const response = await fetch(absolutePath);
+    return response.text();
+  },
+});
 
-// Only renderString is available in browser
-const result = await yapl.renderString(templateString, variables);
-
-// render() will throw an error
-try {
-  await yapl.render('template.yapl'); // Error!
-} catch (error) {
-  console.error(error.message); // "File loading is not available. Provide a loadFile function in YAPLOptions or use renderString for browser usage."
-}
+// Render with custom loaders
+const result = await yapl.render("template.yapl", variables);
 ```
 
 ### Advanced Variable Handling
@@ -343,30 +468,33 @@ try {
 ```typescript
 const complexVars = {
   user: {
-    name: 'Alice',
+    name: "Alice",
     profile: {
-      email: 'alice@example.com',
+      email: "alice@example.com",
       preferences: {
-        theme: 'dark',
-        notifications: true
-      }
+        theme: "dark",
+        notifications: true,
+      },
     },
-    roles: ['admin', 'developer']
+    roles: ["admin", "developer"],
   },
   config: {
     debug: true,
-    version: '1.2.3'
+    version: "1.2.3",
   },
-  features: ['feature1', 'feature2']
+  features: ["feature1", "feature2"],
 };
 
-const result = await yapl.renderString(`
+const result = await yapl.renderString(
+  `
 User: {{ user.name }}
 Email: {{ user.profile.email }}
 Theme: {{ user.profile.preferences.theme }}
 First role: {{ user.roles.0 }}
 Debug mode: {{ config.debug }}
-`, complexVars);
+`,
+  complexVars
+);
 ```
 
 ### File Caching
@@ -374,21 +502,21 @@ Debug mode: {{ config.debug }}
 ```typescript
 // Enable caching (default)
 const cachedYapl = new NodeYAPL({
-  baseDir: './prompts',
-  cache: true
+  baseDir: "./prompts",
+  cache: true,
 });
 
 // Disable caching for development
 const uncachedYapl = new NodeYAPL({
-  baseDir: './prompts',
-  cache: false
+  baseDir: "./prompts",
+  cache: false,
 });
 
 // First render loads from file system
-await cachedYapl.render('template.yapl');
+await cachedYapl.render("template.yapl");
 
 // Second render uses cached content
-await cachedYapl.render('template.yapl'); // Faster!
+await cachedYapl.render("template.yapl"); // Faster!
 ```
 
 ### Path Security
@@ -396,21 +524,21 @@ await cachedYapl.render('template.yapl'); // Faster!
 ```typescript
 // Strict paths enabled (default)
 const secureYapl = new NodeYAPL({
-  baseDir: './prompts',
-  strictPaths: true
+  baseDir: "./prompts",
+  strictPaths: true,
 });
 
 try {
   // This will throw an error
-  await secureYapl.render('../../../etc/passwd');
+  await secureYapl.render("../../../etc/passwd");
 } catch (error) {
   console.error(error.message); // "Path escapes baseDir"
 }
 
 // Disable for special use cases (not recommended)
 const unsecureYapl = new NodeYAPL({
-  baseDir: './prompts',
-  strictPaths: false
+  baseDir: "./prompts",
+  strictPaths: false,
 });
 ```
 
@@ -426,8 +554,7 @@ import {
   WhitespaceOptions,
   Prompt,
   Vars,
-  RendererOptions
-} from '@yapl-language/yapl.ts';
+} from "@yapl-language/yapl.ts";
 ```
 
 ## Error Types
@@ -435,18 +562,20 @@ import {
 Common errors you might encounter:
 
 ### File System Errors
+
 - `ENOENT` - Template file not found
 - `EACCES` - Permission denied
 - `EISDIR` - Path is a directory, not a file
 
 ### Template Errors
+
 - `Max template depth exceeded` - Circular dependency or too deep nesting
 - `Path escapes baseDir` - Attempted path traversal with strictPaths enabled
-- `loadTemplateFile is not available in the browser` - Attempted file operation in browser environment
+- `No resolvePath provided` - Missing path resolver in browser environment
+- `No loadFile provided` - Missing file loader in browser environment
 
 ### Syntax Errors
+
 - Template parsing errors for malformed YAPL syntax
 - Missing `{% endif %}` or `{% endblock %}` tags
 - Invalid variable names or expressions
-
-This API reference covers all public interfaces of the YAPL library. For usage examples and patterns, see the [Examples](/examples/basic/) section.

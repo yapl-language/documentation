@@ -12,12 +12,14 @@ This guide covers common issues you might encounter when working with YAPL and h
 ### Package Not Found
 
 **Error:**
+
 ```
 npm ERR! 404 Not Found - GET https://registry.npmjs.org/yapl
 ```
 
 **Solution:**
 Use the correct package name:
+
 ```bash
 npm install @yapl-language/yapl.ts
 ```
@@ -25,14 +27,16 @@ npm install @yapl-language/yapl.ts
 ### Import Errors
 
 **Error:**
+
 ```typescript
 Cannot find module 'yapl' or its corresponding type declarations
 ```
 
 **Solution:**
 Use the correct import:
+
 ```typescript
-import { NodeYAPL } from '@yapl-language/yapl.ts';
+import { NodeYAPL } from "@yapl-language/yapl.ts";
 ```
 
 ## Template Syntax Errors
@@ -40,17 +44,20 @@ import { NodeYAPL } from '@yapl-language/yapl.ts';
 ### Missing File Extensions
 
 **Error:**
+
 ```
 ENOENT: no such file or directory, open '/path/to/base/system'
 ```
 
 **Problem:**
+
 ```yapl
 {% extends "base/system" %}
 ```
 
 **Solution:**
 Always include file extensions:
+
 ```yapl
 {% extends "base/system.md.yapl" %}
 ```
@@ -58,11 +65,13 @@ Always include file extensions:
 ### Mismatched Block Tags
 
 **Error:**
+
 ```
 Template parsing error: Missing {% endif %}
 ```
 
 **Problem:**
+
 ```yapl
 {% if condition %}
   Content here
@@ -71,6 +80,7 @@ Template parsing error: Missing {% endif %}
 
 **Solution:**
 Ensure all control structures are properly closed:
+
 ```yapl
 {% if condition %}
   Content here
@@ -80,11 +90,13 @@ Ensure all control structures are properly closed:
 ### Invalid Block Names
 
 **Error:**
+
 ```
 Template parsing error: Invalid block name
 ```
 
 **Problem:**
+
 ```yapl
 {% block 123invalid %}
 Content
@@ -93,6 +105,7 @@ Content
 
 **Solution:**
 Use valid block names (letters, numbers, underscores, hyphens, colons):
+
 ```yapl
 {% block valid_block_name %}
 Content
@@ -104,6 +117,7 @@ Content
 ### Path Traversal Blocked
 
 **Error:**
+
 ```
 Error: Path escapes baseDir: ../../../etc/passwd
 ```
@@ -114,29 +128,33 @@ Attempting to access files outside the configured `baseDir` with `strictPaths: t
 **Solutions:**
 
 1. **Use relative paths within baseDir:**
+
 ```yapl
 {% extends "../base/system.md.yapl" %}  {# OK if within baseDir #}
 ```
 
 2. **Disable strict paths (not recommended for production):**
+
 ```typescript
 const yapl = new NodeYAPL({
-  baseDir: './prompts',
-  strictPaths: false
+  baseDir: "./prompts",
+  strictPaths: false,
 });
 ```
 
 3. **Adjust your baseDir:**
+
 ```typescript
 const yapl = new NodeYAPL({
-  baseDir: './parent-directory',  // Set higher in directory tree
-  strictPaths: true
+  baseDir: "./parent-directory", // Set higher in directory tree
+  strictPaths: true,
 });
 ```
 
 ### Maximum Depth Exceeded
 
 **Error:**
+
 ```
 Error: Max template depth exceeded (possible recursion).
 ```
@@ -147,6 +165,7 @@ Circular dependencies or deeply nested templates.
 **Common Causes:**
 
 1. **Circular includes:**
+
 ```yapl
 {# template1.yapl #}
 {% include "template2.yapl" %}
@@ -156,6 +175,7 @@ Circular dependencies or deeply nested templates.
 ```
 
 2. **Self-referencing templates:**
+
 ```yapl
 {# template.yapl #}
 {% include "template.yapl" %}  {# Self-reference! #}
@@ -165,21 +185,24 @@ Circular dependencies or deeply nested templates.
 
 1. **Check for circular dependencies**
 2. **Increase maxDepth if legitimately needed:**
+
 ```typescript
 const yapl = new NodeYAPL({
-  baseDir: './prompts',
-  maxDepth: 50  // Default is 20
+  baseDir: "./prompts",
+  maxDepth: 50, // Default is 20
 });
 ```
 
 ### For Loop Type Errors
 
 **Error:**
+
 ```
 Error: For loop iterable must be an array, got: string
 ```
 
 **Problem:**
+
 ```yapl
 {% for char in "hello" %}  {# String, not array #}
   {{ char }}
@@ -188,6 +211,7 @@ Error: For loop iterable must be an array, got: string
 
 **Solution:**
 Ensure you're iterating over arrays:
+
 ```yapl
 {% for item in items %}  {# items must be an array #}
   {{ item }}
@@ -195,9 +219,10 @@ Ensure you're iterating over arrays:
 ```
 
 Or convert strings to arrays in your data:
+
 ```javascript
 const data = {
-  characters: "hello".split('')  // ["h", "e", "l", "l", "o"]
+  characters: "hello".split(""), // ["h", "e", "l", "l", "o"]
 };
 ```
 
@@ -206,6 +231,7 @@ const data = {
 ### File Not Found
 
 **Error:**
+
 ```
 ENOENT: no such file or directory, open '/path/to/template.yapl'
 ```
@@ -213,30 +239,35 @@ ENOENT: no such file or directory, open '/path/to/template.yapl'
 **Debugging Steps:**
 
 1. **Check file exists:**
+
 ```bash
 ls -la /path/to/template.yapl
 ```
 
 2. **Verify baseDir configuration:**
+
 ```typescript
-console.log('Base directory:', yapl.baseDir);
+console.log("Base directory:", yapl.baseDir);
 ```
 
 3. **Check file permissions:**
+
 ```bash
 ls -la /path/to/
 ```
 
 4. **Use absolute paths for debugging:**
+
 ```typescript
 const yapl = new NodeYAPL({
-  baseDir: path.resolve('./prompts')  // Absolute path
+  baseDir: path.resolve("./prompts"), // Absolute path
 });
 ```
 
 ### Permission Denied
 
 **Error:**
+
 ```
 EACCES: permission denied, open '/path/to/template.yapl'
 ```
@@ -244,11 +275,13 @@ EACCES: permission denied, open '/path/to/template.yapl'
 **Solutions:**
 
 1. **Check file permissions:**
+
 ```bash
 chmod 644 /path/to/template.yapl
 ```
 
 2. **Check directory permissions:**
+
 ```bash
 chmod 755 /path/to/directory
 ```
@@ -263,22 +296,25 @@ chmod 755 /path/to/directory
 Variables showing as empty in output.
 
 **Debugging:**
+
 ```typescript
-const result = await yapl.renderString('{{ missing_var }}', {});
+const result = await yapl.renderString("{{ missing_var }}", {});
 console.log(result.content); // Empty string
 ```
 
 **Solutions:**
 
 1. **Use default values:**
+
 ```yapl
 {{ missing_var | default("fallback value") }}
 ```
 
 2. **Check variable names:**
+
 ```typescript
 const data = {
-  userName: "Alice"  // camelCase
+  userName: "Alice", // camelCase
 };
 
 // This won't work:
@@ -289,6 +325,7 @@ const data = {
 ```
 
 3. **Debug variable access:**
+
 ```yapl
 {# Debug output #}
 Available variables: {{ . }}
@@ -298,18 +335,20 @@ User name: {{ user.name }}
 ### Nested Property Access
 
 **Problem:**
+
 ```yapl
 {{ user.profile.email }}  {# Returns empty #}
 ```
 
 **Debugging:**
+
 ```typescript
 const data = {
   user: {
     profile: {
-      email: "alice@example.com"
-    }
-  }
+      email: "alice@example.com",
+    },
+  },
 };
 
 // Check data structure
@@ -319,20 +358,23 @@ console.log(JSON.stringify(data, null, 2));
 **Common Issues:**
 
 1. **Null/undefined in chain:**
+
 ```javascript
 const data = {
-  user: null  // This breaks user.profile.email
+  user: null, // This breaks user.profile.email
 };
 ```
 
 2. **Typos in property names:**
+
 ```javascript
 const data = {
   user: {
-    profil: {  // Typo: should be "profile"
-      email: "alice@example.com"
-    }
-  }
+    profil: {
+      // Typo: should be "profile"
+      email: "alice@example.com",
+    },
+  },
 };
 ```
 
@@ -341,39 +383,45 @@ const data = {
 ### File Loading Not Available
 
 **Error:**
+
 ```
 Error: File loading is not available. Provide a loadFile function in YAPLOptions or use renderString for browser usage.
 ```
 
 **Problem:**
-```typescript
-import { YAPL } from '@yapl-language/yapl.ts';
 
-const yapl = new YAPL({ baseDir: '/templates' });
-await yapl.render('template.yapl');  // Error!
+```typescript
+import { YAPL } from "@yapl-language/yapl.ts";
+
+const yapl = new YAPL({ baseDir: "/templates" });
+await yapl.render("template.yapl"); // Error!
 ```
 
 **Solution:**
 Use `renderString` in browsers:
-```typescript
-import { YAPL } from '@yapl-language/yapl.ts';
 
-const yapl = new YAPL({ baseDir: '/templates' });
-const templateContent = await fetch('/templates/template.yapl').then(r => r.text());
+```typescript
+import { YAPL } from "@yapl-language/yapl.ts";
+
+const yapl = new YAPL({ baseDir: "/templates" });
+const templateContent = await fetch("/templates/template.yapl").then((r) =>
+  r.text()
+);
 const result = await yapl.renderString(templateContent, variables);
 ```
 
 Or provide custom file loading:
+
 ```typescript
 const yapl = new YAPL({
-  baseDir: '/templates',
+  baseDir: "/templates",
   loadFile: async (path) => {
     const response = await fetch(path);
     return response.text();
   },
   resolvePath: (templateRef, fromDir, ensureExt) => {
     return new URL(ensureExt(templateRef), fromDir).href;
-  }
+  },
 });
 ```
 
@@ -382,6 +430,7 @@ const yapl = new YAPL({
 ### Slow Template Rendering
 
 **Symptoms:**
+
 - Long render times
 - High memory usage
 - Timeouts
@@ -389,23 +438,26 @@ const yapl = new YAPL({
 **Debugging:**
 
 1. **Enable caching:**
+
 ```typescript
 const yapl = new NodeYAPL({
-  baseDir: './prompts',
-  cache: true  // Enable file caching
+  baseDir: "./prompts",
+  cache: true, // Enable file caching
 });
 ```
 
 2. **Profile template complexity:**
+
 ```typescript
-console.time('render');
-const result = await yapl.render('complex-template.yapl', data);
-console.timeEnd('render');
+console.time("render");
+const result = await yapl.render("complex-template.yapl", data);
+console.timeEnd("render");
 ```
 
 3. **Check template depth:**
+
 ```typescript
-console.log('Used files:', result.usedFiles.length);
+console.log("Used files:", result.usedFiles.length);
 ```
 
 **Solutions:**
@@ -418,27 +470,30 @@ console.log('Used files:', result.usedFiles.length);
 ### Memory Leaks
 
 **Symptoms:**
+
 - Increasing memory usage over time
 - Out of memory errors
 
 **Solutions:**
 
 1. **Disable caching for development:**
+
 ```typescript
 const yapl = new NodeYAPL({
-  baseDir: './prompts',
-  cache: false  // Disable for development
+  baseDir: "./prompts",
+  cache: false, // Disable for development
 });
 ```
 
 2. **Create new instances periodically:**
+
 ```typescript
 // For long-running processes
 let yapl = new NodeYAPL(options);
 
 setInterval(() => {
-  yapl = new NodeYAPL(options);  // Fresh instance
-}, 1000 * 60 * 60);  // Every hour
+  yapl = new NodeYAPL(options); // Fresh instance
+}, 1000 * 60 * 60); // Every hour
 ```
 
 ## Debugging Techniques
@@ -464,10 +519,10 @@ ${originalTemplate}
 const result = await yapl.renderString(template, variables);
 
 // Show exact output with whitespace
-console.log('Content:', JSON.stringify(result.content));
+console.log("Content:", JSON.stringify(result.content));
 
 // Show used files
-console.log('Used files:', result.usedFiles);
+console.log("Used files:", result.usedFiles);
 ```
 
 ### Test Templates in Isolation
@@ -485,17 +540,17 @@ const componentResult = await yapl.renderString(
 ```typescript
 // Check data before rendering
 function validateData(data) {
-  console.log('Data structure:');
+  console.log("Data structure:");
   console.log(JSON.stringify(data, null, 2));
-  
+
   // Check for common issues
   if (data.user && !data.user.name) {
-    console.warn('Warning: user.name is missing');
+    console.warn("Warning: user.name is missing");
   }
 }
 
 validateData(templateData);
-const result = await yapl.render('template.yapl', templateData);
+const result = await yapl.render("template.yapl", templateData);
 ```
 
 ## Getting Help
@@ -503,8 +558,7 @@ const result = await yapl.render('template.yapl', templateData);
 ### Check the Documentation
 
 1. [Syntax Reference](/reference/syntax/) - Complete syntax guide
-2. [API Reference](/reference/api/) - Full API documentation
-3. [Examples](/examples/basic/) - Working examples
+2. [API Reference](/reference/api/) - Full API
 
 ### Common Resources
 
@@ -517,16 +571,18 @@ const result = await yapl.render('template.yapl', templateData);
 When reporting issues, include:
 
 1. **YAPL version:**
+
 ```bash
 npm list @yapl-language/yapl.ts
 ```
 
 2. **Minimal reproduction case:**
-```typescript
-import { NodeYAPL } from '@yapl-language/yapl.ts';
 
-const yapl = new NodeYAPL({ baseDir: './test' });
-const result = await yapl.renderString('{{ test }}', { test: 'value' });
+```typescript
+import { NodeYAPL } from "@yapl-language/yapl.ts";
+
+const yapl = new NodeYAPL({ baseDir: "./test" });
+const result = await yapl.renderString("{{ test }}", { test: "value" });
 console.log(result.content);
 ```
 

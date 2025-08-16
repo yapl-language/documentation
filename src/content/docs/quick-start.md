@@ -44,15 +44,15 @@ Create a simple Node.js script to test your template:
 
 ```javascript
 // test.js
-import { NodeYAPL } from '@yapl-language/yapl.ts';
+import { NodeYAPL } from "@yapl-language/yapl.ts";
 
-const yapl = new NodeYAPL({ baseDir: './my-prompts' });
+const yapl = new NodeYAPL({ baseDir: "./my-prompts" });
 
 // Render with variables
-const result = await yapl.render('system.md.yapl', {
-  agent_name: 'CodeBot',
-  expertise: 'software development',
-  format: 'markdown'
+const result = await yapl.render("system.md.yapl", {
+  agent_name: "CodeBot",
+  expertise: "software development",
+  format: "markdown",
 });
 
 console.log(result.content);
@@ -65,21 +65,26 @@ node test.js
 ```
 
 Output:
+
 ```markdown
 # System Prompt
 
 ## Persona
+
 You are CodeBot.
 
 ## Guidelines
+
 - Be helpful and accurate
 - Provide clear explanations
 - Ask clarifying questions when needed
 
 ## Expertise
+
 You specialize in software development.
 
 ## Output Format
+
 Respond in markdown format.
 ```
 
@@ -143,9 +148,9 @@ You have deep knowledge of multiple programming languages and best practices.
 Test the inheritance:
 
 ```javascript
-const result = await yapl.render('coding-assistant.md.yapl', {
-  title: 'Programming Assistant',
-  name: 'DevBot'
+const result = await yapl.render("coding-assistant.md.yapl", {
+  title: "Programming Assistant",
+  name: "DevBot",
 });
 console.log(result.content);
 ```
@@ -155,6 +160,7 @@ console.log(result.content);
 Create reusable mixins in a `mixins/` directory.
 
 `mixins/friendly.md.yapl`:
+
 ```yapl
 {% block persona %}
 {{ super() }}
@@ -163,6 +169,7 @@ You have a friendly, encouraging personality and enjoy helping users learn.
 ```
 
 `mixins/safety.md.yapl`:
+
 ```yapl
 {% block guidelines %}
 {{ super() }}
@@ -231,17 +238,17 @@ Test with different contexts:
 
 ```javascript
 // For a beginner
-const beginnerResult = await yapl.render('coding-assistant.md.yapl', {
-  name: 'TeachBot',
-  user_level: 'beginner',
-  include_tests: true
+const beginnerResult = await yapl.render("coding-assistant.md.yapl", {
+  name: "TeachBot",
+  user_level: "beginner",
+  include_tests: true,
 });
 
 // For an expert
-const expertResult = await yapl.render('coding-assistant.md.yapl', {
-  name: 'ExpertBot',
-  user_level: 'expert',
-  include_tests: false
+const expertResult = await yapl.render("coding-assistant.md.yapl", {
+  name: "ExpertBot",
+  user_level: "expert",
+  include_tests: false,
 });
 ```
 
@@ -250,6 +257,7 @@ const expertResult = await yapl.render('coding-assistant.md.yapl', {
 Break large templates into smaller, reusable pieces:
 
 `components/code-review-checklist.md.yapl`:
+
 ```yapl
 ## Code Review Checklist
 - [ ] Code follows style guidelines
@@ -289,5 +297,3 @@ Ready to dive deeper? Explore the detailed documentation for each feature:
 - [Conditionals](/features/conditionals/) - Explore conditional logic
 - [Includes](/features/includes/) - Break templates into reusable components
 - [Whitespace Control](/features/whitespace/) - Fine-tune output formatting
-
-Or check out more [Examples](/examples/basic/) to see YAPL in real-world scenarios.

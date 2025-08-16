@@ -130,11 +130,17 @@ YAPL templates can be written in many formats:
 
 For the best development experience, install the official YAPL VS Code extension:
 
-[![Install VS Code Extension](https://img.shields.io/visual-studio-marketplace/v/yapl.yapl-vscode?style=for-the-badge&logo=visual-studio-code&logoColor=white&label=VS%20Code%20Extension&color=f472b6)](https://marketplace.visualstudio.com/items?itemName=yapl.yapl-vscode)
+[![Install VS Code Extension](https://img.shields.io/visual-studio-marketplace/v/EinfachAI.yapl?style=for-the-badge&logo=visual-studio-code&logoColor=white&label=VS%20Code%20Extension&color=007ACC)](https://marketplace.visualstudio.com/items?itemName=EinfachAI.yapl)
+
+For VSCodium and other Open VSX compatible editors:
+
+[![Install Open VSX Extension](https://img.shields.io/open-vsx/v/EinfachAI/yapl?style=for-the-badge&logo=vscodium&logoColor=white&label=Open%20VSX%20Extension&color=1E90FF)](https://open-vsx.org/extension/EinfachAI/yapl)
 
 The extension provides:
 
 - Syntax highlighting for `.yapl` files
+- Snippets for common YAPL constructs
+- IntelliSense support for YAPL syntax
 
 ## Next Steps
 
