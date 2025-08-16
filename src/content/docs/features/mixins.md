@@ -1,8 +1,3 @@
----
-title: Mixins
-description: Learn how to use mixins for template composition in YAPL
----
-
 # Mixins
 
 Mixins provide a way to compose templates from multiple sources, allowing you to combine different behaviors, traits, and capabilities without deep inheritance hierarchies. They follow the composition over inheritance principle.

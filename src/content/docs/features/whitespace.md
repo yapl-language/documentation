@@ -1,8 +1,3 @@
----
-title: Whitespace Control
-description: Learn how to control whitespace and formatting in YAPL templates
----
-
 # Whitespace Control
 
 YAPL provides mechanisms to control whitespace in your templates, ensuring clean, properly formatted output. This is especially important for AI prompts where formatting can affect model performance.

@@ -1,8 +1,3 @@
----
-title: Syntax Reference
-description: Complete reference for YAPL template syntax
----
-
 # YAPL Syntax Reference
 
 This page provides a complete reference for all YAPL syntax elements, including directives, variables, and control structures.
@@ -13,7 +8,7 @@ Comments are ignored during template processing and don't appear in the output.
 
 ```yapl
 {# This is a comment #}
-{# 
+{#
 Multi-line comment
 can span several lines
 #}
@@ -55,6 +50,7 @@ All directives use the `{% %}` syntax and support whitespace control with `-` mo
 ### Template Inheritance
 
 #### extends
+
 ```yapl
 {% extends "path/to/parent.yapl" %}
 {%- extends "path/to/parent.yapl" -%}
@@ -63,6 +59,7 @@ All directives use the `{% %}` syntax and support whitespace control with `-` mo
 Must be the first non-comment directive in a template.
 
 #### block
+
 ```yapl
 {% block block_name %}
 Content goes here
@@ -74,13 +71,15 @@ Tight whitespace control
 ```
 
 Block names can contain:
+
 - Letters (a-z, A-Z)
 - Numbers (0-9)
-- Underscores (_)
+- Underscores (\_)
 - Hyphens (-)
 - Colons (:)
 
 Valid block names:
+
 - `content`
 - `main-section`
 - `section_1`
@@ -107,6 +106,7 @@ Valid block names:
 ### Conditionals
 
 #### if/elseif/else/endif
+
 ```yapl
 {% if condition %}
   Content when true
@@ -134,6 +134,7 @@ Valid block names:
 #### Condition Types
 
 **Equality:**
+
 ```yapl
 {% if variable == "value" %}
 {% if number == 42 %}
@@ -141,12 +142,14 @@ Valid block names:
 ```
 
 **Variable existence:**
+
 ```yapl
 {% if variable is defined %}
 {% if variable is not defined %}
 ```
 
 **Truthiness:**
+
 ```yapl
 {% if variable %}          <!-- True if variable exists and is truthy -->
 ```
@@ -154,12 +157,14 @@ Valid block names:
 **Note:** The `not` operator is not supported. Use comparison operators instead: `{% if variable == false %}`
 
 **Logical operators:**
+
 ```yapl
 {% if condition1 and condition2 %}
 {% if condition1 or condition2 %}
 ```
 
 **Comparison with other variables:**
+
 ```yapl
 {% if user_type == admin_type %}
 {% if count == max_count %}
@@ -168,6 +173,7 @@ Valid block names:
 ### For Loops
 
 #### for/endfor
+
 ```yapl
 {% for item in items %}
   {{ item }}
@@ -214,6 +220,7 @@ Additional content
 ```
 
 In `with` clauses and default values:
+
 ```yapl
 {% include "template.yapl" with {"message": "Hello, world!"} %}
 {{ name | default("Anonymous") }}
@@ -228,6 +235,7 @@ In `with` clauses and default values:
 ```
 
 In contexts:
+
 ```yapl
 {{ age | default(18) }}
 {{ price | default(9.99) }}
@@ -243,6 +251,7 @@ In contexts:
 ```
 
 In contexts:
+
 ```yapl
 {{ is_active | default(true) }}
 {% if is_premium == true %}
@@ -357,6 +366,7 @@ In `with` clauses and default values, use standard JSON escaping:
 ### Common Syntax Errors
 
 **Missing endif:**
+
 ```yapl
 {% if condition %}
 Content
@@ -364,6 +374,7 @@ Content
 ```
 
 **Mismatched block names:**
+
 ```yapl
 {% block content %}
 Content
@@ -371,6 +382,7 @@ Content
 ```
 
 **Invalid variable names:**
+
 ```yapl
 {{ 123invalid }}     {# Error: can't start with number #}
 {{ invalid-name }}   {# Error: hyphens not allowed in variable names #}
@@ -378,6 +390,7 @@ Content
 ```
 
 **Extends not first:**
+
 ```yapl
 {% block content %}Something{% endblock %}
 {% extends "base.yapl" %}  {# Error: extends must be first #}
@@ -386,16 +399,19 @@ Content
 ### Runtime Errors
 
 **Undefined variables without defaults:**
+
 ```yapl
 {{ undefined_variable }}  {# Results in empty string #}
 ```
 
 **Path resolution errors:**
+
 ```yapl
 {% extends "nonexistent/template.yapl" %}  {# File not found error #}
 ```
 
 **Circular dependencies:**
+
 ```yapl
 {# template1.yapl #}
 {% include "template2.yapl" %}
@@ -409,6 +425,7 @@ Content
 ### Naming Conventions
 
 **Variables:**
+
 ```yapl
 {{ user_name }}           <!-- snake_case for variables -->
 {{ userProfile.email }}   <!-- camelCase for object properties -->
@@ -416,6 +433,7 @@ Content
 ```
 
 **Blocks:**
+
 ```yapl
 {% block main_content %}     <!-- snake_case -->
 {% block user-profile %}     <!-- kebab-case -->
@@ -423,6 +441,7 @@ Content
 ```
 
 **Files:**
+
 ```yapl
 {% extends "base/agent.md.yapl" %}        <!-- descriptive names -->
 {% include "components/header.yapl" %}    <!-- organized in directories -->
@@ -443,7 +462,7 @@ Content
 {% block content %}
   {# 5. Includes and other directives #}
   {% include "components/header.yapl" %}
-  
+
   {# 6. Template content #}
   Main content here
 {% endblock %}
@@ -452,6 +471,7 @@ Content
 ### Performance Considerations
 
 **Efficient variable access:**
+
 ```yapl
 {# Good - direct access #}
 {{ user.name }}
@@ -461,6 +481,7 @@ Content
 ```
 
 **Minimize deep nesting:**
+
 ```yapl
 {# Good - reasonable nesting #}
 {% if condition1 %}

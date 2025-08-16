@@ -1,8 +1,3 @@
----
-title: Conditionals
-description: Learn how to use if/else statements and conditional logic in YAPL templates
----
-
 # Conditionals
 
 Conditionals allow you to include or exclude content based on runtime conditions, making your templates adaptive and context-aware. YAPL supports `if`, `else`, and nested conditional statements.

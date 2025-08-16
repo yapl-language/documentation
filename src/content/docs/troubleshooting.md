@@ -1,8 +1,3 @@
----
-title: Troubleshooting
-description: Common issues and solutions when working with YAPL
----
-
 # Troubleshooting
 
 This guide covers common issues you might encounter when working with YAPL and how to resolve them.

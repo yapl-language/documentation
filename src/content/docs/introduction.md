@@ -1,8 +1,3 @@
----
-title: Introduction to YAPL
-description: Learn what YAPL is and why it's useful for AI prompt engineering
----
-
 # Introduction to YAPL
 
 Have you ever developed a multi-agent system and found yourself juggling prompts in various formats, scattered across different files, with little visibility or consistency? This is a common challenge in AI prompt engineering—maintaining clarity and control as complexity grows.

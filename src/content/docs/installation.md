@@ -1,8 +1,3 @@
----
-title: Installation
-description: How to install and set up YAPL in your project
----
-
 # Installation
 
 YAPL is available as a TypeScript/JavaScript library that can be used in both Node.js and browser environments, while the latter not makes much sense for most people.

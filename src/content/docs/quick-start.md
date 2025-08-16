@@ -1,8 +1,3 @@
----
-title: Quick Start
-description: Get up and running with YAPL in minutes
----
-
 # Quick Start
 
 This guide will get you up and running with YAPL in just a few minutes. We'll create a simple AI agent prompt that demonstrates the core features of YAPL.

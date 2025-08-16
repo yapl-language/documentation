@@ -1,8 +1,3 @@
----
-title: API Reference
-description: Complete API reference for the YAPL TypeScript library
----
-
 # API Reference
 
 This page provides complete API documentation for the YAPL TypeScript library, including all classes, interfaces, and configuration options.

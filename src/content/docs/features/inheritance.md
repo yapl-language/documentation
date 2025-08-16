@@ -1,8 +1,3 @@
----
-title: Template Inheritance
-description: Learn how to use template inheritance with extends and blocks in YAPL
----
-
 # Template Inheritance
 
 Template inheritance is one of YAPL's most powerful features, allowing you to create a hierarchy of templates where child templates can extend parent templates, inheriting their structure while customizing specific parts.

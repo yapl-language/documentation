@@ -1,8 +1,3 @@
----
-title: For Loops
-description: Iterate over arrays and collections in YAPL templates
----
-
 # For Loops
 
 YAPL supports for loops to iterate over arrays and collections, allowing you to generate repeated content dynamically.

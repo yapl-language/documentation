@@ -1,8 +1,3 @@
----
-title: Includes
-description: Learn how to use includes to break templates into reusable components
----
-
 # Includes
 
 Includes allow you to break large templates into smaller, reusable components. This promotes modularity, reduces duplication, and makes templates easier to maintain.
